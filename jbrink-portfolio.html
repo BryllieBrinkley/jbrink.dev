@@ -1,0 +1,2107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jibryll Brinkley — iOS Engineer Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #050810;
+    --surface: #0b1020;
+    --surface2: #111827;
+    --accent: #00f5c4;
+    --accent2: #7b6fff;
+    --accent3: #ff6b9d;
+    --text: #e8edf5;
+    --muted: #6b7a99;
+    --border: rgba(0,245,196,0.15);
+    --grid: rgba(0,245,196,0.04);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Syne', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* Grid background */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none; z-index: 0;
+  }
+
+  /* Scanlines (arcade CRT) */
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent, transparent 2px,
+      rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px
+    );
+    pointer-events: none; z-index: 1;
+  }
+
+  /* Starfield (astronomy) */
+  .starfield {
+    position: fixed; inset: 0;
+    pointer-events: none; z-index: 0;
+    background-image:
+      radial-gradient(1px 1px at 8% 12%, rgba(255,255,255,0.7), transparent 60%),
+      radial-gradient(1px 1px at 22% 78%, rgba(255,255,255,0.55), transparent 60%),
+      radial-gradient(1px 1px at 41% 31%, rgba(0,245,196,0.7), transparent 60%),
+      radial-gradient(1px 1px at 55% 88%, rgba(255,255,255,0.5), transparent 60%),
+      radial-gradient(1px 1px at 67% 18%, rgba(255,255,255,0.6), transparent 60%),
+      radial-gradient(1px 1px at 78% 65%, rgba(123,111,255,0.6), transparent 60%),
+      radial-gradient(1px 1px at 89% 39%, rgba(255,255,255,0.55), transparent 60%),
+      radial-gradient(1px 1px at 14% 52%, rgba(255,255,255,0.4), transparent 60%),
+      radial-gradient(1px 1px at 32% 9%, rgba(255,255,255,0.45), transparent 60%),
+      radial-gradient(1px 1px at 48% 60%, rgba(255,255,255,0.5), transparent 60%),
+      radial-gradient(1px 1px at 73% 92%, rgba(255,255,255,0.45), transparent 60%),
+      radial-gradient(1px 1px at 95% 8%, rgba(255,107,157,0.55), transparent 60%);
+    background-size: 100% 100%;
+    opacity: 0.85;
+  }
+  .starfield::after {
+    content: ''; position: absolute; inset: 0;
+    background-image:
+      radial-gradient(1.5px 1.5px at 18% 28%, rgba(255,255,255,0.9), transparent 70%),
+      radial-gradient(1.5px 1.5px at 62% 45%, rgba(0,245,196,0.8), transparent 70%),
+      radial-gradient(1.5px 1.5px at 84% 82%, rgba(255,255,255,0.85), transparent 70%);
+    animation: twinkle 3.4s ease-in-out infinite;
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  /* Court arc — basketball motif */
+  .court-arc {
+    position: absolute;
+    width: 720px; height: 720px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,107,157,0.08);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .court-arc::before {
+    content: ''; position: absolute; inset: 60px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,107,157,0.05);
+  }
+
+  /* EQ bars — music motif */
+  .eq {
+    display: inline-flex; align-items: flex-end;
+    gap: 3px; height: 14px; margin-left: 0.6rem;
+    vertical-align: middle;
+  }
+  .eq span {
+    width: 3px; background: var(--accent);
+    animation: eq 0.9s ease-in-out infinite;
+  }
+  .eq span:nth-child(1) { animation-delay: 0s;    height: 50%; }
+  .eq span:nth-child(2) { animation-delay: 0.15s; height: 80%; }
+  .eq span:nth-child(3) { animation-delay: 0.3s;  height: 35%; }
+  .eq span:nth-child(4) { animation-delay: 0.45s; height: 65%; }
+  @keyframes eq {
+    0%, 100% { transform: scaleY(0.4); }
+    50%      { transform: scaleY(1); }
+  }
+  .eq span { transform-origin: bottom; }
+
+  /* HUD corner brackets — aerospace/game UI */
+  .hud { position: relative; }
+  .hud .hud-corner {
+    position: absolute; width: 12px; height: 12px;
+    pointer-events: none; opacity: 0.7;
+    border-color: var(--card-accent, var(--accent));
+  }
+  .hud .hud-corner.tl { top: 8px;    left: 8px;    border-top: 1px solid; border-left: 1px solid; }
+  .hud .hud-corner.tr { top: 8px;    right: 8px;   border-top: 1px solid; border-right: 1px solid; }
+  .hud .hud-corner.bl { bottom: 8px; left: 8px;    border-bottom: 1px solid; border-left: 1px solid; }
+  .hud .hud-corner.br { bottom: 8px; right: 8px;   border-bottom: 1px solid; border-right: 1px solid; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 3rem;
+    background: rgba(5,8,16,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 1rem; font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--muted); }
+
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem; color: var(--muted);
+    text-decoration: none; letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; left: 0; bottom: -4px;
+    width: 0; height: 1px; background: var(--accent);
+    transition: width 0.3s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-links a:hover::after { width: 100%; }
+
+  .nav-resume {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--bg); background: var(--accent);
+    padding: 0.55rem 0.95rem;
+    text-decoration: none; font-weight: 700;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .nav-resume:hover { background: #fff; transform: translateY(-1px); }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; padding: 8rem 3rem 4rem;
+    z-index: 2;
+  }
+
+  .hero-inner {
+    max-width: 1180px; width: 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(240px, 0.85fr);
+    gap: clamp(2.5rem, 7vw, 6rem);
+    align-items: center;
+  }
+  .hero-content { min-width: 0; }
+  .hero-portrait-wrap {
+    position: relative;
+    opacity: 0; animation: fadeUp 0.8s 0.7s forwards;
+    justify-self: end;
+  }
+  .hero-portrait-wrap::before {
+    content: '';
+    position: absolute; inset: 1.25rem -1.25rem -1.25rem 1.25rem;
+    border: 1px solid var(--border);
+    z-index: -1;
+  }
+  .hero-portrait {
+    width: min(100%, 340px);
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    border: 1px solid rgba(0,245,196,0.28);
+    background: var(--surface2);
+  }
+
+  .hero-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem; color: var(--accent);
+    letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.75rem;
+    opacity: 0; animation: fadeUp 0.8s 0.2s forwards;
+  }
+  .hero-tag::before {
+    content: ''; display: block;
+    width: 40px; height: 1px; background: var(--accent);
+  }
+
+  .availability {
+    display: inline-flex; align-items: center; gap: 0.55rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--accent);
+    padding: 0.35rem 0.75rem;
+    border: 1px solid rgba(0,245,196,0.3);
+    background: rgba(0,245,196,0.05);
+    margin-bottom: 1.5rem;
+    opacity: 0; animation: fadeUp 0.8s 0.15s forwards;
+  }
+  .availability .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 0 rgba(0,245,196,0.6);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(0,245,196,0.5); }
+    70%  { box-shadow: 0 0 0 8px rgba(0,245,196,0); }
+    100% { box-shadow: 0 0 0 0 rgba(0,245,196,0); }
+  }
+
+  .hero-name {
+    font-size: clamp(2.6rem, 5.6vw, 5rem);
+    font-weight: 800; line-height: 0.96;
+    letter-spacing: -0.03em;
+    word-break: keep-all;
+    opacity: 0; animation: fadeUp 0.8s 0.4s forwards;
+  }
+  .hero-name .accent { color: var(--accent); }
+  .hero-name .dim { color: var(--muted); }
+
+  .hero-handle {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(1rem, 2vw, 1.4rem);
+    color: var(--accent2);
+    margin: 0.5rem 0 2rem;
+    opacity: 0; animation: fadeUp 0.8s 0.6s forwards;
+    letter-spacing: 0.05em;
+  }
+
+  .hero-desc {
+    font-size: 1.1rem; color: var(--muted);
+    max-width: 650px; line-height: 1.7;
+    opacity: 0; animation: fadeUp 0.8s 0.8s forwards;
+    margin-bottom: 3rem;
+  }
+
+  .hero-pills {
+    display: flex; flex-wrap: wrap; gap: 0.75rem;
+    margin-bottom: 3rem;
+    opacity: 0; animation: fadeUp 0.8s 1s forwards;
+  }
+  .pill {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 0.45rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 2px; color: var(--accent);
+    background: rgba(0,245,196,0.04);
+    transition: all 0.2s;
+  }
+  .pill:hover {
+    background: rgba(0,245,196,0.1);
+    border-color: rgba(0,245,196,0.4);
+  }
+  .pill.purple { color: var(--accent2); border-color: rgba(123,111,255,0.2); background: rgba(123,111,255,0.04); }
+  .pill.pink { color: var(--accent3); border-color: rgba(255,107,157,0.2); background: rgba(255,107,157,0.04); }
+
+  .hero-cta {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.8s 1.1s forwards;
+  }
+  .btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.85rem 2rem; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    transition: all 0.2s;
+  }
+  .btn-primary {
+    background: var(--accent); color: var(--bg);
+    font-weight: 700;
+  }
+  .btn-primary:hover { background: #fff; transform: translateY(-2px); }
+  .btn-outline {
+    border: 1px solid var(--border); color: var(--muted);
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+  /* Floating orbs */
+  .orb {
+    position: absolute; border-radius: 50%;
+    filter: blur(80px); pointer-events: none; z-index: 0;
+  }
+  .orb1 { width: 500px; height: 500px; background: rgba(0,245,196,0.06); top: 10%; right: -10%; }
+  .orb2 { width: 400px; height: 400px; background: rgba(123,111,255,0.07); bottom: 10%; left: -5%; }
+
+  /* Terminal blinker */
+  .blink { animation: blink 1s infinite; }
+  @keyframes blink { 0%,100%{ opacity:1; } 50%{ opacity:0; } }
+
+  /* SECTION COMMONS */
+  section { position: relative; z-index: 2; padding: 6rem 3rem; }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .section-label::before {
+    content: '//'; color: var(--muted);
+  }
+  .section-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800; letter-spacing: -0.02em;
+    margin-bottom: 1rem; line-height: 1.1;
+  }
+  .section-sub {
+    font-size: 1rem; color: var(--muted);
+    max-width: 520px; line-height: 1.7; margin-bottom: 3.5rem;
+  }
+  .section-divider {
+    border: none; border-top: 1px solid var(--border);
+    margin: 0 3rem;
+  }
+
+  /* ABOUT */
+  #about { background: var(--surface); }
+  #about .inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+  .about-text p { font-size: 1rem; color: var(--muted); line-height: 1.8; margin-bottom: 1.25rem; }
+  .about-text p strong { color: var(--text); font-weight: 600; }
+  .about-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+    border: 1px solid var(--border); background: var(--border);
+  }
+  .stat-box {
+    background: var(--surface2); padding: 2rem 1.5rem;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 2.5rem; font-weight: 700;
+    color: var(--accent); display: block;
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.8rem; color: var(--muted);
+    letter-spacing: 0.05em; margin-top: 0.5rem; display: block;
+  }
+
+  /* RECRUITER SNAPSHOT */
+  #snapshot .inner,
+  #github .inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .snapshot-grid,
+  .github-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+  .snapshot-card,
+  .github-card {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    padding: 1.5rem;
+  }
+  .snapshot-card h3,
+  .github-card h3 {
+    font-size: 1rem;
+    margin-bottom: 0.7rem;
+  }
+  .snapshot-card p,
+  .github-card p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.65;
+  }
+  .snapshot-card strong,
+  .github-card strong {
+    color: var(--text);
+  }
+  .github-metric {
+    font-family: 'Space Mono', monospace;
+    color: var(--accent);
+    font-size: 1.8rem;
+    line-height: 1;
+    margin-bottom: 0.7rem;
+    display: block;
+  }
+
+  /* SKILLS */
+  #skills .inner { max-width: 1100px; margin: 0 auto; }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+  }
+  .skill-card {
+    border: 1px solid var(--border);
+    padding: 2rem;
+    position: relative; overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+    background: var(--surface);
+  }
+  .skill-card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--card-accent), transparent);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .skill-card:hover { border-color: var(--card-accent); transform: translateY(-4px); }
+  .skill-card:hover::before { opacity: 1; }
+
+  .skill-icon {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem; font-weight: 700;
+    letter-spacing: 0.04em;
+    width: 56px; height: 48px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--border); margin-bottom: 1.25rem;
+    color: var(--card-accent);
+    background: rgba(255,255,255,0.02);
+  }
+  .skill-card h3 {
+    font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem;
+    color: var(--text);
+  }
+  .skill-card p { font-size: 0.875rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.25rem; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .skill-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem; letter-spacing: 0.08em;
+    padding: 0.3rem 0.6rem; border: 1px solid rgba(255,255,255,0.08);
+    color: var(--muted); border-radius: 2px;
+  }
+
+  /* PROJECTS */
+  #projects { background: var(--surface); }
+  #projects .inner { max-width: 1100px; margin: 0 auto; }
+  .projects-grid { display: grid; gap: 1.5rem; }
+  .project-card {
+    border: 1px solid var(--border);
+    padding: 2.5rem;
+    display: grid; grid-template-columns: 1fr auto;
+    gap: 1.5rem; align-items: start;
+    background: var(--bg);
+    transition: border-color 0.3s, transform 0.3s;
+    position: relative; overflow: hidden;
+    color: inherit;
+    text-decoration: none;
+  }
+  .project-card:hover { border-color: rgba(0,245,196,0.3); transform: translateX(4px); }
+  .project-card::after {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 2px; background: var(--accent);
+    transform: scaleY(0); transform-origin: bottom;
+    transition: transform 0.3s;
+  }
+  .project-card:hover::after { transform: scaleY(1); }
+
+  .project-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem; color: var(--muted);
+    margin-bottom: 1rem;
+  }
+  .project-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 0.75rem; }
+  .project-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.25rem; max-width: 560px; }
+  .project-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .tech-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem; letter-spacing: 0.08em;
+    padding: 0.3rem 0.7rem;
+    background: rgba(0,245,196,0.06);
+    border: 1px solid rgba(0,245,196,0.15);
+    color: var(--accent); border-radius: 2px;
+  }
+  .tech-badge.purple {
+    background: rgba(123,111,255,0.06); border-color: rgba(123,111,255,0.2); color: var(--accent2);
+  }
+  .tech-badge.pink {
+    background: rgba(255,107,157,0.06); border-color: rgba(255,107,157,0.2); color: var(--accent3);
+  }
+  .project-arrow {
+    font-size: 1.5rem; color: var(--muted);
+    transition: color 0.2s, transform 0.2s;
+    margin-top: 0.5rem; cursor: pointer;
+  }
+  .project-card:hover .project-arrow { color: var(--accent); transform: translate(4px, -4px); }
+  .project-browser {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.85fr) minmax(0, 1.15fr);
+    gap: 1.5rem;
+    align-items: stretch;
+  }
+  .project-list {
+    display: grid;
+    gap: 0.75rem;
+  }
+  .project-list-item {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 72px 1fr auto;
+    gap: 1rem;
+    align-items: center;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    padding: 0.85rem;
+    text-align: left;
+    cursor: pointer;
+    transition: border-color 0.2s, transform 0.2s, background 0.2s;
+  }
+  .project-list-item:hover,
+  .project-list-item.active {
+    border-color: rgba(0,245,196,0.4);
+    background: rgba(0,245,196,0.04);
+    transform: translateX(4px);
+  }
+  .project-thumb {
+    width: 72px;
+    aspect-ratio: 4 / 3;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(255,255,255,0.08);
+    background:
+      linear-gradient(135deg, rgba(0,245,196,0.18), rgba(123,111,255,0.08)),
+      var(--surface2);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    overflow: hidden;
+  }
+  .project-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+  }
+  .project-thumb.has-image {
+    background: rgba(255,255,255,0.1);
+    padding: 0;
+  }
+  .project-list-title {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+  .project-list-meta {
+    font-family: 'Space Mono', monospace;
+    color: var(--muted);
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .project-list-arrow {
+    color: var(--muted);
+    font-size: 1.1rem;
+  }
+  .project-preview {
+    border: 1px solid var(--border);
+    background: var(--bg);
+    min-height: 520px;
+    display: grid;
+    grid-template-rows: auto 1fr;
+  }
+  .project-preview-visual {
+    min-height: 260px;
+    padding: 1.25rem;
+    border-bottom: 1px solid var(--border);
+    background:
+      linear-gradient(135deg, rgba(0,245,196,0.12), rgba(123,111,255,0.08) 48%, rgba(255,107,157,0.08)),
+      radial-gradient(circle at 20% 15%, rgba(255,255,255,0.16), transparent 24%),
+      var(--surface2);
+    display: grid;
+    align-content: end;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-preview-visual::before {
+    content: '';
+    position: absolute;
+    inset: 1.25rem;
+    border: 1px solid rgba(255,255,255,0.08);
+    background-image:
+      linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+  .project-preview-visual::after {
+    content: attr(data-preview);
+    position: relative;
+    z-index: 1;
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(1.4rem, 4vw, 3.25rem);
+    font-weight: 700;
+    color: rgba(232,237,245,0.92);
+    line-height: 0.95;
+    max-width: 9ch;
+  }
+  .project-preview-visual.has-image {
+    min-height: 320px;
+    align-content: center;
+    justify-items: center;
+  }
+  .project-preview-visual.has-image::after {
+    content: '';
+  }
+  .project-shot-grid {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+  .project-shot {
+    display: block;
+    width: min(100%, 560px);
+    max-height: 300px;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    object-position: top center;
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 18px;
+    background: rgba(0,0,0,0.22);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.28);
+  }
+  .project-shot.is-phone {
+    width: min(42%, 150px);
+    max-height: 300px;
+    aspect-ratio: 9 / 19.5;
+    border-radius: 24px;
+  }
+  .project-preview-body {
+    padding: 2rem;
+  }
+  .project-preview-kicker {
+    font-family: 'Space Mono', monospace;
+    color: var(--accent);
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.9rem;
+  }
+  .project-preview-title {
+    font-size: clamp(1.65rem, 3vw, 2.25rem);
+    line-height: 1.05;
+    margin-bottom: 1rem;
+  }
+  .project-preview-desc {
+    color: var(--muted);
+    line-height: 1.75;
+    max-width: 620px;
+    margin-bottom: 1rem;
+  }
+  .project-preview-section {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 1rem;
+    margin-top: 1rem;
+  }
+  .project-preview-label {
+    font-family: 'Space Mono', monospace;
+    color: var(--accent);
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 0.55rem;
+  }
+  .project-preview-text {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.65;
+  }
+  .project-preview-features {
+    display: grid;
+    gap: 0.45rem;
+    color: var(--muted);
+    font-size: 0.88rem;
+    line-height: 1.55;
+    list-style: none;
+  }
+  .project-preview-features li::before {
+    content: '→';
+    color: var(--accent);
+    margin-right: 0.5rem;
+  }
+  .project-preview-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+  .project-preview-link.is-disabled {
+    pointer-events: none;
+    opacity: 0.45;
+  }
+
+  /* CONTACT */
+  #contact .inner {
+    max-width: 700px; margin: 0 auto; text-align: center;
+  }
+  .contact-email {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    color: var(--accent); margin: 2rem 0;
+    display: inline-block;
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 0.25rem;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .contact-email:hover { opacity: 0.7; }
+  .social-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 2.5rem; }
+  .social-link {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted); text-decoration: none;
+    display: flex; align-items: center; gap: 0.5rem;
+    transition: color 0.2s;
+    padding: 0.75rem 1.25rem;
+    border: 1px solid var(--border);
+  }
+  .social-link:hover { color: var(--accent); border-color: rgba(0,245,196,0.3); }
+
+  /* FOOTER */
+  footer {
+    position: relative; z-index: 2;
+    padding: 2rem 3rem;
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  footer p {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem; color: var(--muted); letter-spacing: 0.05em;
+  }
+  footer .accent { color: var(--accent); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+  @media (max-width: 1024px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+    .hero-portrait-wrap { order: -1; justify-self: start; }
+    .hero-portrait { width: min(100%, 260px); }
+    .experience-card { grid-template-columns: 1fr; gap: 1.25rem; }
+    .experience-meta { border-left: none; border-top: 2px solid var(--accent); padding-left: 0; padding-top: 0.85rem; }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.25rem; gap: 0.75rem; flex-wrap: wrap; }
+    .nav-links { gap: 0.85rem; flex-wrap: wrap; }
+    .nav-links a { font-size: 0.65rem; }
+    .nav-resume { font-size: 0.62rem; padding: 0.45rem 0.7rem; }
+    section { padding: 4rem 1.5rem; }
+    #hero { padding-top: 8rem; }
+    .hero-portrait { width: min(100%, 220px); }
+    #about .inner { grid-template-columns: 1fr; gap: 3rem; }
+    .snapshot-grid,
+    .github-grid { grid-template-columns: 1fr; }
+    .experience-card { padding: 1.5rem; }
+    .project-browser { grid-template-columns: 1fr; }
+    .project-preview { min-height: auto; }
+    .project-preview-visual { min-height: 210px; }
+    .project-preview-visual.has-image { min-height: 260px; }
+    .project-shot { max-height: 240px; }
+    .project-shot.is-phone { width: min(45%, 120px); max-height: 240px; border-radius: 20px; }
+    .project-list-item { grid-template-columns: 64px 1fr auto; }
+    .project-thumb { width: 64px; }
+    .hero-cta { flex-direction: column; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+    .section-divider { margin: 0 1.5rem; }
+  }
+  .experience-card {
+  border: 1px solid var(--border);
+  background: var(--bg);
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 2rem;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.experience-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(0,245,196,0.25);
+}
+
+.experience-meta {
+  border-right: 1px solid var(--border);
+  padding-right: 1.5rem;
+}
+
+.experience-role {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.experience-company {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.experience-dates {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.experience-body h4 {
+  margin-bottom: 1rem;
+  color: var(--text);
+}
+
+.experience-bullets {
+  margin-left: 1rem;
+  margin-bottom: 1rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.experience-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.experience-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+
+/* APPLE LOGIN SCREEN THEME */
+:root {
+  --bg: #f5f7fb;
+  --surface: rgba(255, 255, 255, 0.18);
+  --surface2: rgba(255, 255, 255, 0.28);
+  --accent: #007aff;
+  --accent2: #5856d6;
+  --accent3: #ff2d55;
+  --text: #f8fbff;
+  --muted: rgba(248, 251, 255, 0.76);
+  --border: rgba(255, 255, 255, 0.28);
+  --grid: transparent;
+  --glass-shadow: 0 24px 90px rgba(12, 20, 40, 0.28);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 18% 18%, rgba(255,255,255,0.9), transparent 13%),
+    radial-gradient(circle at 76% 12%, rgba(255,214,102,0.72), transparent 18%),
+    radial-gradient(circle at 84% 66%, rgba(255,45,85,0.52), transparent 25%),
+    radial-gradient(circle at 22% 78%, rgba(88,86,214,0.72), transparent 25%),
+    linear-gradient(135deg, #6bbcff 0%, #5e6ad2 42%, #ee6b8f 72%, #f5c16c 100%);
+  background-attachment: fixed;
+}
+
+body::before {
+  background:
+    linear-gradient(rgba(255,255,255,0.14), rgba(255,255,255,0.03)),
+    radial-gradient(circle at 50% 0%, rgba(255,255,255,0.32), transparent 34%);
+  backdrop-filter: blur(34px) saturate(1.2);
+  z-index: 0;
+}
+
+body::after {
+  background: rgba(7, 13, 28, 0.14);
+}
+
+.starfield,
+.orb,
+.court-arc,
+.eq,
+.blink,
+.hud-corner {
+  display: none !important;
+}
+
+nav {
+  top: 1rem;
+  left: 50%;
+  right: auto;
+  width: min(calc(100% - 2rem), 1120px);
+  transform: translateX(-50%);
+  padding: 0.65rem 1rem 0.65rem 1.25rem;
+  border: 1px solid rgba(255,255,255,0.24);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.18);
+  box-shadow: 0 16px 44px rgba(12, 20, 40, 0.18);
+  backdrop-filter: blur(28px) saturate(1.45);
+}
+
+.nav-logo {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+  color: #fff;
+  letter-spacing: 0;
+}
+
+.nav-logo span,
+.nav-links a {
+  color: rgba(255,255,255,0.72);
+}
+
+.nav-links {
+  gap: 1.1rem;
+}
+
+.nav-links a {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.nav-links a::after {
+  display: none;
+}
+
+.nav-links a:hover {
+  color: #fff;
+}
+
+.nav-resume {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  letter-spacing: 0;
+  text-transform: none;
+  border-radius: 999px;
+  color: #111827;
+  background: rgba(255,255,255,0.86);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.95);
+}
+
+#hero {
+  min-height: 100vh;
+  padding: 8.5rem 1.5rem 5.75rem;
+}
+
+.hero-inner {
+  width: min(100%, 520px);
+  max-width: 520px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.7rem;
+  justify-items: center;
+  text-align: center;
+  padding: clamp(2rem, 5vw, 2.85rem);
+  border: 1px solid rgba(255,255,255,0.24);
+  border-radius: 34px;
+  background: rgba(255,255,255,0.16);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(34px) saturate(1.35);
+}
+
+.hero-content {
+  min-width: 0;
+  display: grid;
+  justify-items: center;
+}
+
+.hero-portrait-wrap {
+  order: -1;
+  justify-self: center;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.2s forwards;
+}
+
+.hero-portrait-wrap::before {
+  display: none;
+}
+
+.hero-portrait {
+  width: 132px;
+  height: 132px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.72);
+  box-shadow: 0 20px 45px rgba(10, 18, 35, 0.32);
+  background: rgba(255,255,255,0.32);
+}
+
+.availability {
+  order: 4;
+  margin: 1rem 0 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.16);
+  color: rgba(255,255,255,0.84);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.availability .dot {
+  background: #32d74b;
+}
+
+.hero-tag {
+  justify-content: center;
+  margin: 0 0 0.75rem;
+  color: rgba(255,255,255,0.72);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.hero-tag::before {
+  display: none;
+}
+
+.hero-name {
+  font-size: clamp(2.35rem, 8vw, 4rem);
+  line-height: 1;
+  letter-spacing: 0;
+  color: #fff;
+  text-shadow: 0 18px 45px rgba(8, 15, 30, 0.32);
+}
+
+.hero-name .accent,
+.hero-name .dim {
+  color: #fff;
+}
+
+.hero-handle {
+  margin: 0.75rem 0 1.45rem;
+  color: rgba(255,255,255,0.76);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0;
+}
+
+.hero-desc {
+  max-width: 440px;
+  margin-bottom: 1.55rem;
+  color: rgba(255,255,255,0.78);
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+
+.hero-pills {
+  justify-content: center;
+  gap: 0.85rem;
+  margin-bottom: 1.75rem;
+}
+
+.pill,
+.pill.purple,
+.pill.pink {
+  border: 1px solid rgba(255,255,255,0.24);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.14);
+  color: rgba(255,255,255,0.84);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.hero-cta {
+  width: min(100%, 440px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: center;
+  gap: 0.9rem;
+}
+
+.hero-cta .btn-primary {
+  grid-column: 1 / -1;
+}
+
+.btn,
+.social-link {
+  border-radius: 999px;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.btn-primary {
+  background: rgba(255,255,255,0.88);
+  color: #111827;
+}
+
+.btn-primary:hover {
+  background: #fff;
+}
+
+.btn-outline,
+.social-link {
+  border: 1px solid rgba(255,255,255,0.24);
+  color: rgba(255,255,255,0.78);
+  background: rgba(255,255,255,0.1);
+}
+
+.btn-outline:hover,
+.social-link:hover {
+  border-color: rgba(255,255,255,0.42);
+  color: #fff;
+}
+
+section {
+  padding: 6.25rem 1.5rem;
+}
+
+section > .inner,
+#about .inner,
+#skills .inner,
+#projects .inner,
+#snapshot .inner,
+#github .inner,
+#contact .inner {
+  width: min(100%, 1120px);
+  margin: 0 auto;
+  padding: clamp(1.7rem, 4vw, 2.75rem);
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 28px;
+  background: rgba(255,255,255,0.14);
+  box-shadow: 0 18px 70px rgba(12, 20, 40, 0.18);
+  backdrop-filter: blur(28px) saturate(1.28);
+}
+
+#about,
+#projects {
+  background: transparent;
+}
+
+.section-divider {
+  border-top: 1px solid rgba(255,255,255,0.16);
+  margin: 0 auto;
+  width: min(calc(100% - 3rem), 1120px);
+}
+
+.section-label,
+.project-preview-kicker,
+.project-preview-label {
+  color: rgba(255,255,255,0.72);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.section-label::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #32d74b;
+}
+
+.section-title {
+  letter-spacing: 0;
+  color: #fff;
+}
+
+.section-sub,
+.about-text p,
+.snapshot-card p,
+.github-card p,
+.skill-card p,
+.project-preview-desc,
+.project-preview-text,
+.project-preview-features,
+.experience-bullets,
+.experience-dates {
+  color: rgba(255,255,255,0.76);
+}
+
+.about-text p strong,
+.snapshot-card strong,
+.github-card strong,
+.experience-body h4 {
+  color: #fff;
+}
+
+.stat-box,
+.snapshot-card,
+.github-card,
+.skill-card,
+.project-list-item,
+.project-preview,
+.experience-card {
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 22px;
+  background: rgba(255,255,255,0.13);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.16);
+  overflow: hidden;
+}
+
+.stat-num,
+.github-metric,
+.experience-role,
+.project-preview-label,
+.project-preview-kicker {
+  color: #fff;
+}
+
+.stat-label,
+.skill-tag,
+.experience-tag,
+.project-list-meta {
+  color: rgba(255,255,255,0.66);
+}
+
+.skill-icon,
+.project-thumb {
+  border-radius: 18px;
+  border-color: rgba(255,255,255,0.22);
+  color: #fff;
+  background: rgba(255,255,255,0.14);
+}
+
+.skill-card:hover,
+.experience-card:hover,
+.project-list-item:hover,
+.project-list-item.active {
+  border-color: rgba(255,255,255,0.45);
+  background: rgba(255,255,255,0.2);
+}
+
+.project-preview-visual {
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.34), rgba(255,255,255,0.08)),
+    radial-gradient(circle at 22% 18%, rgba(255,255,255,0.44), transparent 26%),
+    rgba(255,255,255,0.12);
+  border-bottom-color: rgba(255,255,255,0.18);
+}
+
+.project-preview-visual::before {
+  border-color: rgba(255,255,255,0.12);
+  background-image: none;
+}
+
+.tech-badge,
+.tech-badge.purple,
+.tech-badge.pink {
+  border-radius: 999px;
+  border-color: rgba(255,255,255,0.22);
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.82);
+}
+
+.project-preview-section {
+  border-top-color: rgba(255,255,255,0.14);
+}
+
+.experience-meta {
+  border-right-color: rgba(255,255,255,0.16);
+}
+
+.contact-email {
+  color: #fff;
+  border-bottom-color: rgba(255,255,255,0.48);
+}
+
+footer {
+  border-top: 1px solid rgba(255,255,255,0.16);
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(18px);
+}
+
+footer p,
+footer .accent {
+  color: rgba(255,255,255,0.72);
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.56);
+}
+
+@media (max-width: 1024px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+  }
+  .hero-portrait-wrap {
+    justify-self: center;
+  }
+}
+
+@media (max-width: 768px) {
+  nav {
+    position: absolute;
+    top: 0.75rem;
+    border-radius: 24px;
+    justify-content: center;
+  }
+  .nav-links {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+  }
+  #hero {
+    padding-top: 9.5rem;
+  }
+  .hero-inner {
+    border-radius: 28px;
+    gap: 1.45rem;
+    padding: 2rem 1.35rem;
+  }
+  .hero-cta {
+    width: 100%;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  .hero-cta .btn-primary {
+    grid-column: auto;
+  }
+  .hero-portrait {
+    width: 108px;
+    height: 108px;
+  }
+  section > .inner,
+  #about .inner,
+  #skills .inner,
+  #projects .inner,
+  #snapshot .inner,
+  #github .inner,
+  #contact .inner {
+    border-radius: 24px;
+  }
+  .experience-meta {
+    border-right: 0;
+    border-top: 0;
+    padding-right: 0;
+    padding-top: 0;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<div class="starfield" aria-hidden="true"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">JBRINK<span>.DEV</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">iOS Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#github">GitHub</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="assets/iOSResume_JBrinkley2026.pdf" class="nav-resume" target="_blank" rel="noopener noreferrer">Résumé ↗</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="court-arc" style="top: 8%; right: -260px;"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="availability"><span class="dot"></span>Seeking iOS opportunities</div>
+      <div class="hero-tag">iOS Engineer (SwiftUI / UIKit)</div>
+      <h1 class="hero-name">
+        Jibryll Brinkley
+      </h1>
+      <div class="hero-handle">iOS Developer · Swift · SwiftUI</div>
+      <p class="hero-desc">
+iOS Engineer building production Swift and SwiftUI apps across Apple's framework ecosystem. Experienced in Swift, SwiftUI, UIKit, and MVVM, with a proven track record of building production-ready features from product specs, backend systems, and Figma designs.
+      </p>
+      <div class="hero-pills" id="heroPills"></div>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">View iOS Projects →</a>
+        <a href="assets/iOSResume_JBrinkley2026.pdf" class="btn btn-outline" target="_blank" rel="noopener noreferrer">Download Résumé ↗</a>
+        <a href="https://github.com/BryllieBrinkley" class="btn btn-outline" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+      </div>
+    </div>
+    <div class="hero-portrait-wrap">
+      <img src="assets/jibryll-brinkley-portrait.png" alt="Jibryll Brinkley professional portrait" class="hero-portrait">
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="inner">
+    <div class="about-text reveal">
+      <div class="section-label">About</div>
+      <h2 class="section-title">iOS Engineer <span style="color:var(--accent)">specializing in Swift, SwiftUI, and production app development</span></h2>
+      <p>My name is <strong>Jibryll Brinkley</strong>, and I am an iOS-first software engineer with a B.S. in Applied Computer Science, concentrating in iOS development. I am also currently pursuing an AAS in Artificial Intelligence (expected August 2027).</p>
+      <p>My work is rooted in native iOS development (Swift, SwiftUI, UIKit, MVVM, API integration, and responsive mobile UI) with additional expertise in AI and machine learning through Python-based projects, model evaluation at Handshake AI, and coursework.</p>
+      </div>
+    <div class="about-stats reveal" id="statsGrid"></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- RECRUITER SNAPSHOT -->
+<section id="snapshot">
+  <div class="inner">
+    <div class="reveal">
+      <div class="section-label">Summary</div>
+      <h2 class="section-title">Execution-Driven iOS Engineer</h2>
+      <p class="section-sub">SwiftUI internship experience, 46 Swift Github repositories, Apple platform API development, and ML/AI/Python experience.</p>
+    </div>
+    <div class="snapshot-grid reveal">
+      <article class="snapshot-card">
+        <h3>Role fit</h3>
+        <p><strong>iOS engineer</strong> focused on Swift, SwiftUI, UIKit, MVVM, REST APIs, reusable UI, debugging, and mobile app architecture.</p>
+      </article>
+      <article class="snapshot-card">
+        <h3>Professional proof</h3>
+        <p><strong>2 iOS internships</strong> with hands-on experience in SwiftUI feature development, Figma-to-code implementation, secure API integration, and Agile methodologies.</p>
+      </article>
+      <article class="snapshot-card">
+        <h3>Project proof</h3>
+        <p><strong>46 Swift repositories</strong> showcasing consistent iOS development across SwiftUI, UIKit, networking, persistence, Apple frameworks, and production-style mobile applications.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="inner">
+    <div class="reveal">
+      <div class="section-label">Experience</div>
+      <h2 class="section-title">Professional experience.</h2>
+<p class="section-sub">iOS engineering internships, secure mobile systems, and AI evaluation roles.</p>
+    </div>
+    <div class="experience-list reveal" id="experienceList" style="display: grid; gap: 1.5rem;"></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="inner">
+    <div class="reveal">
+      <div class="section-label">Skills</div>
+      <h2 class="section-title">Technical skills.</h2>
+      <p class="section-sub">Swift, SwiftUI, UIKit, MVVM, APIs, persistence, testing, Apple platform APIs, and supporting AI/Python skills.</p>
+    </div>
+    <div class="skills-grid" id="skillsGrid"></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="inner">
+    <div class="reveal">
+      <div class="section-label">Featured Projects</div>
+      <h2 class="section-title">iOS Independent Projects</h2>
+      <p class="section-sub">
+      Primary experience in native iOS development, with additional exposure to AI systems, machine learning, and full-stack web development.</p>
+    </div>
+    <div class="project-browser reveal">
+      <div class="project-list" id="projectList" aria-label="Project list"></div>
+      <div class="project-preview hud" aria-live="polite" style="--card-accent: var(--accent);">
+        <span class="hud-corner tl"></span><span class="hud-corner tr"></span>
+        <span class="hud-corner bl"></span><span class="hud-corner br"></span>
+        <div class="project-preview-visual" id="projectPreviewVisual" data-preview="GIVE"></div>
+        <div class="project-preview-body">
+          <div class="project-preview-kicker" id="projectPreviewKicker">01 / iOS</div>
+          <h3 class="project-preview-title" id="projectPreviewTitle">WhyDonate</h3>
+          <p class="project-preview-desc" id="projectPreviewDesc">A SwiftUI app that helps users find credible charities faster.</p>
+          <div class="project-preview-section">
+            <div class="project-preview-label">Problem</div>
+            <p class="project-preview-text" id="projectPreviewProblem"></p>
+          </div>
+          <div class="project-preview-section">
+            <div class="project-preview-label">Solution</div>
+            <p class="project-preview-text" id="projectPreviewBuilt"></p>
+          </div>
+          <div class="project-preview-section">
+            <div class="project-preview-label">Architecture</div>
+            <p class="project-preview-text" id="projectPreviewArchitecture"></p>
+          </div>
+          <div class="project-preview-section">
+            <div class="project-preview-label">Technical challenges</div>
+            <p class="project-preview-text" id="projectPreviewChallenges"></p>
+          </div>
+          <div class="project-preview-section">
+            <div class="project-preview-label">Tradeoffs</div>
+            <p class="project-preview-text" id="projectPreviewTradeoffs"></p>
+          </div>
+          <div class="project-preview-section">
+            <div class="project-preview-label">Results</div>
+            <p class="project-preview-text" id="projectPreviewResults"></p>
+          </div>
+          <div class="project-preview-section">
+            <div class="project-preview-label">Key features</div>
+            <ul class="project-preview-features" id="projectPreviewFeatures"></ul>
+          </div>
+          <div class="project-tech" id="projectPreviewTech"></div>
+          <div class="project-preview-section">
+            <div class="project-preview-label">My role</div>
+            <p class="project-preview-text" id="projectPreviewRole"></p>
+          </div>
+          <div class="project-preview-section">
+            <div class="project-preview-label">Recruiter takeaway</div>
+            <p class="project-preview-text" id="projectPreviewDetail"></p>
+          </div>
+          <div class="project-preview-actions">
+            <a href="#" class="btn btn-primary project-preview-link is-disabled" id="projectPreviewLink" target="_blank" rel="noopener noreferrer">View Project →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- GITHUB -->
+<section id="github">
+  <div class="inner">
+    <div class="reveal">
+      <div class="section-label">GitHub</div>
+      <h2 class="section-title">GitHub proof.</h2>
+      <p class="section-sub">I use GitHub to document my engineering projects, ranging from building native iOS apps with SwiftUI to developing complex AI and machine learning models in Python.</p>
+    </div>
+    <div class="github-grid reveal">
+      <article class="github-card">
+        <span class="github-metric">63</span>
+        <h3>Public repositories</h3>
+        <p>Engineering work spanning native iOS apps, API integration, and supporting Python-based AI and ML systems.</p>
+</article>
+      <article class="github-card">
+        <span class="github-metric">46</span>
+        <h3>Swift-focused repositories</h3>
+        <p>Core iOS development using Swift, SwiftUI, UIKit, MapKit, Core ML, SwiftData, and Apple platform APIs. Includes production-style architecture patterns such as MVVM, reusable UI components, networking stacks, persistence layers, and system-level feature exploration.</p>
+      </article>
+      <article class="github-card">
+        <span class="github-metric">AI + iOS</span>
+        <h3>iOS Engineering Focus Areas</h3>
+    <p>→ SwiftUI & UIKit</p>
+    <p>→ MapKit & Core Location</p>
+    <p>→ Core ML & Apple AI frameworks</p>
+    <p>→ REST APIs, URLSession & async/await</p>
+    <p>→ SwiftData & local persistence</p>
+    <p>→ Reusable UI views and components</p>
+    <p>→ Architecture and design patterns (MVC, MVVM) </p>
+    </article>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="inner">
+    <div class="reveal">
+      <div class="section-label" style="justify-content: center;">Contact</div>
+      <h2 class="section-title">Let’s talk iOS.</h2>
+      <p class="section-sub" style="margin: 1rem auto 0; max-width: 520px;">
+      Open to iOS engineering roles. Let's connect.
+    </p>
+      <a href="mailto:jibryll.s.brinkley@gmail.com" class="contact-email">jibryll.s.brinkley@gmail.com</a>
+      <div class="social-links">
+        <a href="https://github.com/BryllieBrinkley" class="social-link" target="_blank" rel="noopener noreferrer">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          GitHub
+        </a>
+        <a href="https://www.linkedin.com/in/jibryllbrinkley/" class="social-link" target="_blank" rel="noopener noreferrer">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+        <a href="assets/iOSResume_JBrinkley2026.pdf" class="social-link" target="_blank" rel="noopener noreferrer">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
+          Resume
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 <span class="accent">JBRINK.DEV</span> — Jibryll Brinkley</p>
+  <p>Swift · SwiftUI · UIKit · MVVM · API Integration</p>
+</footer>
+
+<script>
+  const profile = {
+    heroPills: [
+      { label: 'iOS Engineering'},
+      { label: 'Swift', tone: 'pink' },
+      { label: 'SwiftUI', tone: 'pink' },
+      { label: 'UIKit' },
+      { label: 'MVVM' },
+      { label: 'REST APIs' },
+      { label: 'MapKit' },
+      { label: 'CoreML' },
+      { label: 'XCTest' }
+    ],
+    stats: [
+      { value: 'BS', label: 'Applied Computer Science' },
+      { value: '46', label: 'Swift repositories' },
+      { value: '2', label: 'iOS internships' },
+      { value: '2027', label: 'AI AAS expected graduation' }
+    ],
+skills: [
+  {
+    icon: 'iOS',
+    title: 'iOS Engineering',
+    accent: '#ff6b9d',
+    description: 'Native app development with Swift, SwiftUI, UIKit, MVVM, Apple platform APIs, persistence, testing, and responsive mobile UI.',
+    tags: ['Swift', 'SwiftUI', 'UIKit', 'MVVM', 'MVC', 'Xcode', 'XCTest', 'URLSession', 'MapKit', 'Core Location', 'CoreML', 'PDFKit', 'StoreKit', 'SwiftData', 'NSCache']
+  },
+  {
+    icon: 'API',
+    title: 'Mobile Product Implementation',
+    accent: '#00f5c4',
+    description: 'API-driven product flows, Figma-to-code implementation, reusable components, caching, debugging, and launch-readiness work.',
+    tags: ['REST APIs', 'JSON', 'State Management', 'Reusable Components', 'Design Systems', 'Figma', 'Caching', 'Debugging', 'Performance Monitoring', 'Agile']
+  },
+  {
+    icon: 'AI',
+    title: 'Supporting AI & Backend',
+    accent: '#7b6fff',
+    description: 'Applied AI and backend skills that support product engineering without replacing the iOS-first focus.',
+    tags: ['Python', 'FastAPI', 'PostgreSQL', 'Supabase', 'Stripe', 'OpenAI', 'RAG', 'Embeddings', 'pandas', 'scikit-learn', 'LLM Evaluation']
+  }
+],
+    experience: [
+      {
+        role: 'iOS Engineer Intern',
+        company: 'AaronBux Wealth Management Company',
+        dates: 'January 2025 – April 2025',
+        focus: 'Fintech iOS development focused on secure architecture, compliance workflows, and scalable SwiftUI systems.',
+        bullets: [
+          'Built reusable SwiftUI component library and established app-wide MVVM state architecture for production feature development.',
+          'Designed secure networking layer using REST APIs with AWS KMS, Secrets Manager, and API Gateway for encrypted data workflows.',
+          'Developed PDFKit-based compliance flows that increased completion rates by 30%.',
+          'Translated Figma designs into responsive SwiftUI interfaces across multiple device sizes with reusable layout patterns.',
+          'Participated in full Agile lifecycle (sprint planning, standups, reviews, retrospectives) contributing to production releases.'
+        ],
+        tags: ['Swift', 'SwiftUI', 'MVVM', 'UIKit', 'REST APIs', 'PDFKit', 'AWS (KMS, Secrets Manager, API Gateway)', 'XCTest']
+      },
+      {
+        role: 'AI / iOS Engineer Intern',
+        company: 'Escape Enterprises',
+        dates: 'August 2024 – January 2025',
+        focus: 'Production mobile development for a Flutter-based iOS application focused on AI-driven personalization, system stability, and release execution.',
+        bullets: [
+          'Built and shipped production features in a Flutter-based iOS app, contributing to core UI flows and application architecture.',
+          'Integrated LLM-powered personalization system to generate dynamic, user-specific wellness experiences within the app.',
+          'Resolved 30+ launch-blocking issues across state management, API integration, and UI consistency during release cycles.',
+          'Improved app stability to 98% crash-free sessions through debugging, lifecycle fixes, and production monitoring.',
+          'Mentored junior developers and improved team efficiency by 40%.',
+          'Collaborated with product and design teams to deliver production-ready features under tight iteration and release timelines.'
+        ],
+        tags: ['Flutter', 'Dart', 'Mobile Architecture', 'REST APIs', 'LLM Integration', 'Debugging']
+      },
+      {
+        role: 'Model Evaluator · Multimodal & Annotation',
+        company: 'Handshake AI',
+        dates: 'December 2025 – Present',
+        focus: 'AI model evaluation focused on computer vision quality, reasoning accuracy, and dataset integrity.',
+        bullets: [
+          'Evaluated computer vision outputs using structured rubrics for correctness, edge cases, and model reliability.',
+          'Annotated multimodal datasets for training and benchmarking AI systems across visual reasoning tasks.',
+          'Identified and flagged model failure patterns, improving dataset consistency and evaluation accuracy.',
+          'Escalated edge-case behavior and contributed to refinement of evaluation guidelines.'
+        ],
+        tags: ['AI Evaluation', 'Computer Vision', 'Rubric QA', 'Data Quality', 'Multimodal Systems']
+      },
+      {
+        role: 'AI Trainer',
+        company: 'Outlier AI',
+        dates: 'Contract / AI training',
+        focus: 'AI alignment and response evaluation for large language model systems.',
+        bullets: [
+          'Evaluated LLM outputs for correctness, reasoning depth, and instruction adherence under structured scoring rubrics.',
+          'Designed adversarial prompts to surface model failure cases and edge reasoning boundaries.',
+          'Supported RLHF-style feedback loops improving response consistency and alignment quality.',
+          'Validated model outputs against strict evaluation guidelines to ensure production-level quality standards.'
+        ],
+        tags: ['Prompt Engineering', 'LLM Evaluation', 'RLHF', 'Quality Assurance', 'Quality Control']
+      }
+    ]
+  };
+
+  const projects = [
+    {
+      title: 'WhyDonate',
+      category: 'Flagship iOS',
+      preview: 'GIVE',
+      desc: 'A SwiftUI charity discovery app with search, donation flow UI, caching, and performance monitoring.',
+      problem: 'Donors need a faster way to discover credible charities, review giving options, and move through a clear mobile donation flow.',
+      built: 'Built a SwiftUI product experience with onboarding, search, donation UI, charity API planning, StoreKit planning, caching, and reusable visual components.',
+      architecture: 'MVVM structure with SwiftUI views, view models, service boundaries, API planning, lightweight cache layers, image caching, and reusable design-system elements.',
+      challenges: 'Keeping search responsive, reducing repeated network work, handling image loading, and keeping donation-related screens readable on mobile.',
+      tradeoffs: 'Used UserDefaults and NSCache for lightweight cache behavior before introducing heavier persistence, keeping the app easier to reason about at this scope.',
+      results: 'Public GitHub repo with a working iOS product flow, five-minute cache behavior, image caching, onboarding, and performance tracking.',
+      tech: ['Swift', 'SwiftUI', 'MVVM', 'StoreKit', 'Charity Navigator API', 'IRS API', 'UserDefaults', 'NSCache', 'Xcode'],
+      features: ['Charity discovery', 'Donation UI', 'Onboarding', '5-minute cache', 'Image caching', 'Performance tracking', 'Reusable design system'],
+      role: 'Independent project. Built the iOS architecture, UI, caching, and performance features.',
+      status: 'Public GitHub repo.',
+      detail: 'Strongest iOS signal: SwiftUI architecture, API planning, caching, performance work, and mobile product ownership.',
+      cta: 'View GitHub',
+      url: 'https://github.com/BryllieBrinkley/whydonate',
+      screenshots: [
+        { src: 'assets/whydonate.png', alt: 'WhyDonate SwiftUI charity discovery app screen', type: 'phone' }
+      ]
+    },
+    {
+      title: 'NearMe',
+      category: 'iOS',
+      preview: 'MAP',
+      desc: 'A SwiftUI MapKit app for finding nearby restaurants, gas stations, coffee shops, and local places.',
+      problem: 'Users need a simple map-based way to search nearby places, inspect details, and route to a destination.',
+      built: 'Built a SwiftUI MapKit app with location permissions, nearby search, place details, and route-planning UI.',
+      architecture: 'SwiftUI views backed by MapKit and Core Location flows, state-driven search results, permission handling, and route display logic.',
+      challenges: 'Managing location permissions, updating map state, presenting local search results, and keeping route changes clear in the UI.',
+      tradeoffs: 'Used native MapKit and Core Location instead of a third-party SDK to keep the project Apple-platform focused.',
+      results: 'Public GitHub repo showing MapKit local search, location permission flow, place details, and route-planning behavior.',
+      tech: ['Swift', 'SwiftUI', 'MapKit', 'Core Location', 'MVVM', 'Xcode'],
+      features: ['Map interface', 'Nearby search', 'Place details', 'Route planning', 'Location permissions'],
+      role: 'Independent project. Built the SwiftUI views, MapKit integration, location flow, and local search UI.',
+      status: 'Public GitHub repo.',
+      detail: 'Strong Apple platform API proof through MapKit, Core Location, SwiftUI state, and route planning.',
+      cta: 'View GitHub',
+      url: 'https://github.com/BryllieBrinkley/NearMe',
+      screenshots: [
+        { src: 'assets/NearMe1.png', alt: 'NearMe SwiftUI MapKit nearby places map screen', type: 'phone' },
+        { src: 'assets/NearMe2.png', alt: 'NearMe SwiftUI place details screen', type: 'phone' }
+      ]
+    },
+    {
+      title: 'Moviefy',
+      category: 'iOS',
+      preview: 'MOV',
+      desc: 'A UIKit movie browsing app that pulls trending movie data from the TMDb API.',
+      problem: 'Movie browsing apps need clean networking, reusable UI cells, and clear separation between API work and screen rendering.',
+      built: 'Built a UIKit app with TMDb API requests, response models, reusable table and collection cells, and structured screen flows.',
+      architecture: 'MVC organization with URLSession networking, request and response models, reusable cells, and view-controller-driven screen composition.',
+      challenges: 'Decoding API responses, separating networking from UI code, and keeping reusable cells flexible for movie data.',
+      tradeoffs: 'MVC fits the scope and UIKit learning goals; a future MVVM refactor would improve testability and separation for larger features.',
+      results: 'Public GitHub repo demonstrating UIKit fundamentals, API integration, JSON decoding, and reusable mobile UI.',
+      tech: ['Swift', 'UIKit', 'TMDb API', 'MVC', 'URLSession', 'JSON', 'Xcode', 'Reusable Cells'],
+      features: ['TMDb API integration', 'Trending movie browsing', 'Reusable collection/table cells', 'Structured networking layer', 'Request and response models'],
+      role: 'Independent project. Built the networking layer, UI structure, models, and screens.',
+      status: 'Public GitHub repo.',
+      detail: 'Clear UIKit and API implementation proof: networking, model decoding, view controllers, and reusable cells.',
+      cta: 'View GitHub',
+      url: 'https://github.com/BryllieBrinkley/Moviefy'
+    },
+    {
+      title: 'PicDetect',
+      category: 'iOS',
+      preview: 'ML',
+      desc: 'An iOS image-recognition app powered by CoreML and Inception v3.',
+      problem: 'Image classification models need a usable mobile capture flow before users can get practical predictions.',
+      built: 'Built an iOS app that captures images and displays on-device CoreML predictions.',
+      architecture: 'UIKit camera flow connected to a CoreML inference layer, image input handling, prediction execution, and result display UI.',
+      challenges: 'Handling camera permissions, preparing image input for the model, integrating CoreML, and presenting results clearly.',
+      tradeoffs: 'On-device CoreML improves privacy and latency but limits model flexibility compared with server-side inference.',
+      results: 'Public GitHub repo demonstrating an iOS camera workflow and Apple-native machine learning integration.',
+      tech: ['Swift', 'UIKit', 'CoreML', 'Inception v3', 'Camera', 'Xcode'],
+      features: ['Camera capture', 'On-device image classification', 'CoreML integration', 'Prediction display'],
+      role: 'Independent project. Built the iOS camera flow, CoreML integration, and prediction UI.',
+      status: 'Public GitHub repo.',
+      detail: 'On-device CoreML integration proof — camera flow, model inference, and Apple-native machine learning.',
+      cta: 'View GitHub',
+      url: 'https://github.com/BryllieBrinkley/PicDetect'
+    },
+    {
+      title: 'GroupRide',
+      category: 'Product',
+      preview: 'GR',
+      desc: 'A transportation marketplace for booking, dispatch, payments, and operational dashboards.',
+      problem: 'Transportation operators should not need separate tools for rider requests, dispatch, pricing, payment, and coordination.',
+      built: 'Built a full-stack booking flow with rider requests, AI-assisted driver assignment, route pricing, Stripe payments, dashboards, and realtime updates.',
+      architecture: 'Next.js frontend with Supabase/PostgreSQL data, protected routes, Stripe payment flow, Google Maps API integration, and realtime booking state.',
+      challenges: 'Coordinating multi-role dashboards, payment state, route-based pricing, and realtime operational updates.',
+      tradeoffs: 'Web implementation proves product engineering range, while the project stays secondary to the iOS-first portfolio narrative.',
+      results: 'Active deployed build showing booking, dispatch, payment, and dashboard workflows.',
+      tech: ['Next.js', 'TypeScript', 'React', 'Tailwind CSS', 'Supabase', 'PostgreSQL', 'Stripe', 'Google Maps API', 'Zod'],
+      features: ['AI-assisted dispatch', 'Realtime booking updates', 'Multi-role dashboards', 'Stripe payments', 'Route-based pricing', 'Protected routes'],
+      role: 'Independent project. Built the full-stack flow, backend logic, dashboards, and realtime updates.',
+      status: 'Active build.',
+      cta: 'View Project',
+      url: 'https://v0-goupryde.vercel.app/',
+      screenshots: [
+        { src: 'assets/groupride.png', alt: 'GroupRide transportation booking dashboard', type: 'landscape' }
+      ]
+    },
+    {
+      title: 'Knowledge Agent',
+      category: 'AI Support',
+      preview: 'RAG',
+      desc: 'A RAG application for answering questions from uploaded documents with citations.',
+      problem: 'AI answers are hard to trust when they are not grounded in source material.',
+      built: 'Built a RAG workflow with document upload, chunking, embeddings, ChromaDB search, GPT streaming, inline citations, and source navigation.',
+      architecture: 'FastAPI backend, ChromaDB vector store, embedding pipeline, Server-Sent Events streaming, and React/Vite frontend.',
+      challenges: 'Grounding answers in retrieved context, streaming responses cleanly, and keeping citations tied to source chunks.',
+      tradeoffs: 'Local vector storage keeps the project lightweight; production would need auth, document lifecycle management, and scaling work.',
+      results: 'Live demo with upload, vector search, streaming answers, clickable citations, and source navigation.',
+      tech: ['Python', 'FastAPI', 'ChromaDB', 'Sentence Transformers', 'OpenAI GPT-4o-mini', 'Server-Sent Events', 'React', 'Vite', 'TypeScript'],
+      features: ['Document upload', 'Vector search', 'Streaming answers', 'Clickable citations', 'Source navigation'],
+      role: 'Independent project. Built the backend, vector database, streaming flow, UI, and citation engine.',
+      status: 'Live demo.',
+      cta: 'Try Live Demo',
+      url: 'https://e9c872e9-4229-481d-a3a8-8201e5e18b90-00-1pf3f373assue.spock.replit.dev',
+      screenshots: [
+        { src: 'assets/knowledgeagent.png', alt: 'Knowledge Agent document question answering interface', type: 'landscape' }
+      ]
+    },
+    {
+      title: 'NBA Game Prediction Model',
+      category: 'ML Support',
+      preview: 'NBA',
+      desc: 'A Python model that predicts NBA winners with 67.8% reported accuracy.',
+      problem: 'Sports prediction data is noisy, and model features must avoid using information from the future.',
+      built: 'Built a time-aware ML pipeline using 2019-2024 data, Elo ratings, rolling stats, efficiency metrics, rest, and chronological validation.',
+      architecture: 'Python data pipeline with feature engineering, training, evaluation, saved model artifacts, and prediction scripts.',
+      challenges: 'Preventing data leakage, building features from information available before each game, and validating on chronological splits.',
+      tradeoffs: 'Random Forest keeps the model explainable enough for a portfolio project; more tuning could improve performance but add complexity.',
+      results: 'Public README reports 67.8% game-winner accuracy on 2019-2024 NBA data.',
+      tech: ['Python', 'pandas', 'scikit-learn', 'Random Forest', 'Elo Ratings', 'Feature Engineering', 'joblib'],
+      features: ['~10,000 games', 'Chronological split', 'Team Elo', 'Rolling features', 'Vegas probability comparison'],
+      role: 'Independent project. Built the data processing, features, training, evaluation, and prediction scripts.',
+      status: 'Public GitHub repo.',
+      cta: 'View GitHub',
+      url: 'https://github.com/BryllieBrinkley/NBA-Game-Prediction-Model'
+    }
+  ];
+
+  const projectPriority = {
+    WhyDonate: 1,
+    NearMe: 2,
+    Moviefy: 3,
+    PicDetect: 4,
+    GroupRide: 5,
+    'Knowledge Agent': 6,
+    'NBA Game Prediction Model': 7
+  };
+  projects.sort((a, b) => projectPriority[a.title] - projectPriority[b.title]);
+
+  const projectList = document.getElementById('projectList');
+  const previewVisual = document.getElementById('projectPreviewVisual');
+  const previewKicker = document.getElementById('projectPreviewKicker');
+  const previewTitle = document.getElementById('projectPreviewTitle');
+  const previewDesc = document.getElementById('projectPreviewDesc');
+  const previewProblem = document.getElementById('projectPreviewProblem');
+  const previewBuilt = document.getElementById('projectPreviewBuilt');
+  const previewArchitecture = document.getElementById('projectPreviewArchitecture');
+  const previewChallenges = document.getElementById('projectPreviewChallenges');
+  const previewTradeoffs = document.getElementById('projectPreviewTradeoffs');
+  const previewResults = document.getElementById('projectPreviewResults');
+  const previewFeatures = document.getElementById('projectPreviewFeatures');
+  const previewTech = document.getElementById('projectPreviewTech');
+  const previewRole = document.getElementById('projectPreviewRole');
+  const previewDetail = document.getElementById('projectPreviewDetail');
+  const previewLink = document.getElementById('projectPreviewLink');
+
+  function renderHeroPills() {
+    const heroPills = document.getElementById('heroPills');
+    if (!heroPills) return;
+    heroPills.innerHTML = profile.heroPills.map((pill) => (
+      `<span class="pill ${pill.tone || ''}">${pill.label}</span>`
+    )).join('');
+  }
+
+  function renderStats() {
+    const statsGrid = document.getElementById('statsGrid');
+    if (!statsGrid) return;
+    statsGrid.innerHTML = profile.stats.map((stat) => `
+      <div class="stat-box">
+        <span class="stat-num">${stat.value}</span>
+        <span class="stat-label">${stat.label}</span>
+      </div>
+    `).join('');
+  }
+
+  function renderSkills() {
+    const skillsGrid = document.getElementById('skillsGrid');
+    if (!skillsGrid) return;
+    skillsGrid.innerHTML = profile.skills.map((skill) => `
+      <div class="skill-card hud reveal" style="--card-accent: ${skill.accent};">
+        <span class="hud-corner tl"></span><span class="hud-corner tr"></span>
+        <span class="hud-corner bl"></span><span class="hud-corner br"></span>
+        <div class="skill-icon">${skill.icon}</div>
+        <h3>${skill.title}</h3>
+        <p>${skill.description}</p>
+        <div class="skill-tags">
+          ${skill.tags.map((tag) => `<span class="skill-tag">${tag}</span>`).join('')}
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function renderProjectThumb(project) {
+    const screenshot = project.screenshots?.[0];
+    if (!screenshot) return `<span class="project-thumb">${project.preview}</span>`;
+    return `
+      <span class="project-thumb has-image">
+        <img src="${screenshot.src}" alt="${screenshot.alt}" loading="lazy">
+      </span>
+    `;
+  }
+
+  function setProject(index) {
+    const project = projects[index];
+    previewVisual.dataset.preview = project.preview;
+    previewVisual.classList.toggle('has-image', Boolean(project.screenshots?.length));
+    previewVisual.innerHTML = project.screenshots?.length ? `
+      <div class="project-shot-grid">
+        ${project.screenshots.map((screenshot) => `
+          <img
+            class="project-shot ${screenshot.type === 'phone' ? 'is-phone' : ''}"
+            src="${screenshot.src}"
+            alt="${screenshot.alt}"
+            loading="lazy"
+          >
+        `).join('')}
+      </div>
+    ` : '';
+    previewKicker.textContent = `${String(index + 1).padStart(2, '0')} / ${project.category}`;
+    previewTitle.textContent = project.title;
+    previewDesc.textContent = project.desc;
+    previewProblem.textContent = project.problem;
+    previewBuilt.textContent = project.built;
+    previewArchitecture.textContent = project.architecture;
+    previewChallenges.textContent = project.challenges;
+    previewTradeoffs.textContent = project.tradeoffs;
+    previewResults.textContent = project.results;
+    previewRole.textContent = `${project.role} ${project.status}`;
+    previewDetail.textContent = project.detail;
+    previewFeatures.innerHTML = '';
+    previewTech.innerHTML = '';
+
+    project.features.forEach((feature) => {
+      const item = document.createElement('li');
+      item.textContent = feature;
+      previewFeatures.appendChild(item);
+    });
+
+    project.tech.forEach((tech) => {
+      const tag = document.createElement('span');
+      const category = project.category.toLowerCase();
+      tag.className = `tech-badge${category.includes('ios') || category === 'product' ? ' pink' : category.includes('ai') || category.includes('ml') ? ' purple' : ''}`;
+      tag.textContent = tech;
+      previewTech.appendChild(tag);
+    });
+
+    if (project.url) {
+      previewLink.href = project.url;
+      previewLink.classList.remove('is-disabled');
+      previewLink.textContent = `${project.cta} →`;
+    } else {
+      previewLink.href = '#';
+      previewLink.classList.add('is-disabled');
+      previewLink.textContent = `${project.cta} Coming Soon`;
+    }
+
+    document.querySelectorAll('.project-list-item').forEach((item, itemIndex) => {
+      item.classList.toggle('active', itemIndex === index);
+      item.setAttribute('aria-selected', itemIndex === index ? 'true' : 'false');
+    });
+  }
+
+  function renderProjectList() {
+    projectList.innerHTML = '';
+    projects.forEach((project, index) => {
+    const item = document.createElement('button');
+    item.type = 'button';
+    item.className = 'project-list-item';
+    item.setAttribute('aria-selected', index === 0 ? 'true' : 'false');
+    item.innerHTML = `
+      ${renderProjectThumb(project)}
+      <span>
+        <span class="project-list-title">${project.title}</span>
+        <span class="project-list-meta">${String(index + 1).padStart(2, '0')} / ${project.category}</span>
+      </span>
+      <span class="project-list-arrow">↗</span>
+    `;
+    item.addEventListener('click', () => setProject(index));
+    item.addEventListener('mouseenter', () => setProject(index));
+    projectList.appendChild(item);
+    });
+    setProject(0);
+  }
+
+  function renderExperience() {
+    const list = document.getElementById('experienceList');
+    if (!list || !profile.experience) return;
+    list.innerHTML = profile.experience.map((job) => `
+      <article class="experience-card">
+        <div class="experience-meta">
+          <div class="experience-role">${job.role}</div>
+          <div class="experience-company">${job.company}</div>
+          <div class="experience-dates">${job.dates}</div>
+        </div>
+        <div class="experience-body">
+          <h4>${job.focus}</h4>
+          <ul class="experience-bullets">
+            ${job.bullets.map((b) => `<li>${b}</li>`).join('')}
+          </ul>
+          <div class="experience-tags">
+            ${job.tags.map((t) => `<span class="experience-tag">${t}</span>`).join('')}
+          </div>
+        </div>
+      </article>
+    `).join('');
+  }
+
+  renderHeroPills();
+  renderStats();
+  renderSkills();
+  renderExperience();
+  renderProjectList();
+
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Typewriter for hero tag
+  const tag = document.querySelector('.hero-tag');
+  const tagText = tag.textContent;
+  tag.textContent = '';
+  let ti = 0;
+  setTimeout(() => {
+    const t = setInterval(() => {
+      tag.textContent += tagText[ti++];
+      if (ti >= tagText.length) clearInterval(t);
+    }, 35);
+  }, 400);
+</script>
+</body>
+</html>
