@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jibryll Brinkley — iOS Engineer Portfolio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #050810;
@@ -650,11 +649,15 @@
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 1rem;
+    overflow-x: auto;
+    padding: 0.25rem 0.1rem 0.85rem;
+    scroll-snap-type: x proximity;
   }
   .project-shot {
     display: block;
+    flex: 0 0 auto;
     width: min(100%, 560px);
     max-height: 300px;
     aspect-ratio: 16 / 9;
@@ -664,6 +667,7 @@
     border-radius: 18px;
     background: rgba(0,0,0,0.22);
     box-shadow: 0 24px 60px rgba(0,0,0,0.28);
+    scroll-snap-align: center;
   }
   .project-shot.is-phone {
     width: min(42%, 150px);
@@ -1528,49 +1532,119 @@ iOS Engineer building production Swift and SwiftUI apps across Apple's framework
         <span class="hud-corner bl"></span><span class="hud-corner br"></span>
         <div class="project-preview-visual" id="projectPreviewVisual" data-preview="GIVE"></div>
         <div class="project-preview-body">
-          <div class="project-preview-kicker" id="projectPreviewKicker">01 / iOS</div>
-          <h3 class="project-preview-title" id="projectPreviewTitle">WhyDonate</h3>
-          <p class="project-preview-desc" id="projectPreviewDesc">A SwiftUI app that helps users find credible charities faster.</p>
-          <div class="project-preview-section">
-            <div class="project-preview-label">Problem</div>
-            <p class="project-preview-text" id="projectPreviewProblem"></p>
-          </div>
-          <div class="project-preview-section">
-            <div class="project-preview-label">Solution</div>
-            <p class="project-preview-text" id="projectPreviewBuilt"></p>
-          </div>
-          <div class="project-preview-section">
-            <div class="project-preview-label">Architecture</div>
-            <p class="project-preview-text" id="projectPreviewArchitecture"></p>
-          </div>
-          <div class="project-preview-section">
-            <div class="project-preview-label">Technical challenges</div>
-            <p class="project-preview-text" id="projectPreviewChallenges"></p>
-          </div>
-          <div class="project-preview-section">
-            <div class="project-preview-label">Tradeoffs</div>
-            <p class="project-preview-text" id="projectPreviewTradeoffs"></p>
-          </div>
-          <div class="project-preview-section">
-            <div class="project-preview-label">Results</div>
-            <p class="project-preview-text" id="projectPreviewResults"></p>
-          </div>
-          <div class="project-preview-section">
-            <div class="project-preview-label">Key features</div>
-            <ul class="project-preview-features" id="projectPreviewFeatures"></ul>
-          </div>
-          <div class="project-tech" id="projectPreviewTech"></div>
-          <div class="project-preview-section">
-            <div class="project-preview-label">My role</div>
-            <p class="project-preview-text" id="projectPreviewRole"></p>
-          </div>
-          <div class="project-preview-section">
-            <div class="project-preview-label">Recruiter takeaway</div>
-            <p class="project-preview-text" id="projectPreviewDetail"></p>
-          </div>
-          <div class="project-preview-actions">
-            <a href="#" class="btn btn-primary project-preview-link is-disabled" id="projectPreviewLink" target="_blank" rel="noopener noreferrer">View Project →</a>
-          </div>
+        <div class="project-preview-kicker" id="projectPreviewKicker">01 / iOS</div>
+  <h3 class="project-preview-title" id="projectPreviewTitle">
+  NASA Explorer
+</h3>
+<p class="project-preview-desc" id="projectPreviewDesc">
+  A SwiftUI app for discovering NASA’s Astronomy Picture of the Day
+  and exploring space imagery from NASA’s media library.
+</p>
+
+<div class="project-preview-section">
+  <div class="project-preview-label">Problem</div>
+  <p class="project-preview-text" id="projectPreviewProblem">
+    NASA provides multiple public APIs, but their content is spread across
+    different services and can be difficult to explore from one mobile experience.
+  </p>
+</div>
+
+<div class="project-preview-section">
+  <div class="project-preview-label">Solution</div>
+  <p class="project-preview-text" id="projectPreviewBuilt">
+    Built a polished iOS app that combines NASA’s daily astronomy content,
+    searchable media library, detailed image views, and saved discoveries
+    in one accessible experience.
+  </p>
+</div>
+
+<div class="project-preview-section">
+  <div class="project-preview-label">Architecture</div>
+  <p class="project-preview-text" id="projectPreviewArchitecture">
+    Built with SwiftUI and MVVM. Observable view models manage UI state,
+    service types handle networking, Codable models represent API responses,
+    and SwiftData provides local persistence.
+  </p>
+</div>
+
+<div class="project-preview-section">
+  <div class="project-preview-label">Technical challenges</div>
+  <p class="project-preview-text" id="projectPreviewChallenges">
+    Integrated two NASA APIs with different response structures, handled
+    image and video APOD content, decoded nested JSON, managed asynchronous
+    loading states, and displayed remote media reliably.
+  </p>
+</div>
+
+<div class="project-preview-section">
+  <div class="project-preview-label">Tradeoffs</div>
+  <p class="project-preview-text" id="projectPreviewTradeoffs">
+    Used AsyncImage for straightforward remote-image loading and SwiftData
+    for lightweight on-device persistence. More advanced image caching and
+    offline synchronization are planned improvements.
+  </p>
+</div>
+
+<div class="project-preview-section">
+  <div class="project-preview-label">Results</div>
+  <p class="project-preview-text" id="projectPreviewResults">
+    Delivered a reusable, API-driven SwiftUI application with clear separation
+    of concerns, persistent saved content, responsive loading states, and a
+    polished space-inspired interface.
+  </p>
+</div>
+
+<div class="project-preview-section">
+  <div class="project-preview-label">Key features</div>
+  <ul class="project-preview-features" id="projectPreviewFeatures">
+    <li>NASA Astronomy Picture of the Day</li>
+    <li>Searchable NASA image library</li>
+    <li>Category-based space exploration</li>
+    <li>Detailed and full-screen media views</li>
+    <li>Saved discoveries with SwiftData</li>
+    <li>Loading, empty, and error states</li>
+  </ul>
+</div>
+
+<div class="project-tech" id="projectPreviewTech">
+  <span>Swift</span>
+  <span>SwiftUI</span>
+  <span>MVVM</span>
+  <span>Swift Concurrency</span>
+  <span>URLSession</span>
+  <span>REST APIs</span>
+  <span>SwiftData</span>
+</div>
+
+<div class="project-preview-section">
+  <div class="project-preview-label">My role</div>
+  <p class="project-preview-text" id="projectPreviewRole">
+    Designed and developed the complete iOS experience, including the user
+    interface, MVVM architecture, API integrations, data models, persistence,
+    error handling, and visual polish.
+  </p>
+</div>
+
+<div class="project-preview-section">
+  <div class="project-preview-label">Recruiter takeaway</div>
+  <p class="project-preview-text" id="projectPreviewDetail">
+    Demonstrates my ability to build a production-style SwiftUI app that
+    integrates real-world APIs, uses async/await, manages application state,
+    persists user data, and presents complex content through a polished UI.
+  </p>
+</div>
+
+<div class="project-preview-actions">
+  <a
+    href="https://github.com/BryllieBrinkley/NASAExplorer"
+    class="btn btn-primary project-preview-link"
+    id="projectPreviewLink"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    View on GitHub →
+  </a>
+</div>
         </div>
       </div>
     </div>
@@ -1752,25 +1826,53 @@ skills: [
 
   const projects = [
     {
-      title: 'WhyDonate',
+      title: 'NASA Explorer',
       category: 'Flagship iOS',
-      preview: 'GIVE',
-      desc: 'A SwiftUI charity discovery app with search, donation flow UI, caching, and performance monitoring.',
-      problem: 'Donors need a faster way to discover credible charities, review giving options, and move through a clear mobile donation flow.',
-      built: 'Built a SwiftUI product experience with onboarding, search, donation UI, charity API planning, StoreKit planning, caching, and reusable visual components.',
-      architecture: 'MVVM structure with SwiftUI views, view models, service boundaries, API planning, lightweight cache layers, image caching, and reusable design-system elements.',
-      challenges: 'Keeping search responsive, reducing repeated network work, handling image loading, and keeping donation-related screens readable on mobile.',
-      tradeoffs: 'Used UserDefaults and NSCache for lightweight cache behavior before introducing heavier persistence, keeping the app easier to reason about at this scope.',
-      results: 'Public GitHub repo with a working iOS product flow, five-minute cache behavior, image caching, onboarding, and performance tracking.',
-      tech: ['Swift', 'SwiftUI', 'MVVM', 'StoreKit', 'Charity Navigator API', 'IRS API', 'UserDefaults', 'NSCache', 'Xcode'],
-      features: ['Charity discovery', 'Donation UI', 'Onboarding', '5-minute cache', 'Image caching', 'Performance tracking', 'Reusable design system'],
-      role: 'Independent project. Built the iOS architecture, UI, caching, and performance features.',
-      status: 'Public GitHub repo.',
-      detail: 'Strongest iOS signal: SwiftUI architecture, API planning, caching, performance work, and mobile product ownership.',
+      preview: 'NASA',
+      desc: 'A SwiftUI space discovery app featuring NASA’s Astronomy Picture of the Day, searchable media, and saved discoveries.',
+      problem: 'NASA provides incredible public content, but its astronomy images and searchable media are spread across separate services and can be difficult to explore in one mobile experience.',
+      built: 'Built a polished SwiftUI app that combines NASA’s Astronomy Picture of the Day with searchable space imagery, category-based discovery, detailed media views, and persistent saved items.',
+      architecture: 'MVVM architecture with SwiftUI views, @Observable and @MainActor view models, dedicated networking services, Codable models, async/await API requests, and SwiftData persistence.',
+      challenges: 'Integrated NASA APIs with different response structures, handled both image and video APOD content, decoded nested JSON, managed API keys securely, and created reliable loading and error states.',
+      tradeoffs: 'Used AsyncImage for straightforward remote image loading and SwiftData for lightweight local persistence. More advanced image caching and offline synchronization remain future improvements.',
+      results: 'Delivered a public, API-driven iOS project with reusable components, asynchronous networking, persistent saved content, full-screen media viewing, and a polished space-inspired interface.',
+      tech: [
+        'Swift',
+        'SwiftUI',
+        'MVVM',
+        'Swift Concurrency',
+        'URLSession',
+        'REST APIs',
+        'Codable',
+        'SwiftData',
+        'NASA APOD API',
+        'NASA Images API',
+        'Xcode'
+      ],
+      features: [
+        'Astronomy Picture of the Day',
+        'NASA image search',
+        'Category-based exploration',
+        'Detailed media views',
+        'Full-screen image viewer',
+        'Saved discoveries',
+        'Loading and error states',
+        'Reusable SwiftUI components'
+      ],
+      role: 'Independent project. Designed and developed the SwiftUI interface, MVVM architecture, API integrations, data models, persistence layer, error handling, and visual design.',
+      status: 'Public GitHub repository.',
+      detail: 'Strong iOS engineering signal: SwiftUI, MVVM, async/await networking, multiple REST API integrations, Codable data modeling, SwiftData persistence, and complete mobile product ownership.',
       cta: 'View GitHub',
-      url: 'https://github.com/BryllieBrinkley/whydonate',
+      url: 'https://github.com/BryllieBrinkley/NASAExplorer',
       screenshots: [
-        { src: 'assets/whydonate.png', alt: 'WhyDonate SwiftUI charity discovery app screen', type: 'phone' }
+        { src: 'assets/nasa-explorer-media-detail.png', alt: 'NASA Explorer NASA media detail screen', type: 'phone' },
+        { src: 'assets/nasa-explorer-home.png', alt: 'NASA Explorer home explore screen with browse media and astronomy picture of the day', type: 'phone' },
+        { src: 'assets/nasa-explorer-apod.png', alt: 'NASA Explorer astronomy picture of the day detail screen', type: 'phone' },
+        { src: 'assets/nasa-explorer-launch.png', alt: 'NASA Explorer media detail screen showing Voyager 1 launch', type: 'phone' },
+        { src: 'assets/nasa-explorer-planets-list.png', alt: 'NASA Explorer planets media list screen', type: 'phone' },
+        { src: 'assets/nasa-explorer-search-results.png', alt: 'NASA Explorer search results screen for exoplanet media', type: 'phone' },
+        { src: 'assets/nasa-explorer-planets-loading.png', alt: 'NASA Explorer planets loading screen', type: 'phone' },
+        { src: 'assets/nasa-explorer-saved-empty.png', alt: 'NASA Explorer saved items empty state screen', type: 'phone' }
       ]
     },
     {
@@ -1897,7 +1999,7 @@ skills: [
   ];
 
   const projectPriority = {
-    WhyDonate: 1,
+    'NASA Explorer': 1,
     NearMe: 2,
     Moviefy: 3,
     PicDetect: 4,
