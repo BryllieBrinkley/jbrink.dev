@@ -1395,6 +1395,413 @@ footer .accent {
   }
 }
 
+/* GROUNDED PORTFOLIO THEME */
+:root {
+  --bg: #f7f4ee;
+  --surface: #ffffff;
+  --surface2: #f2f5f8;
+  --accent: #0a84ff;
+  --accent2: #3457d5;
+  --accent3: #c2415d;
+  --text: #172033;
+  --muted: #5f6b7a;
+  --border: rgba(23, 32, 51, 0.12);
+  --grid: transparent;
+  --glass-shadow: 0 24px 70px rgba(36, 48, 70, 0.11);
+}
+
+body {
+  color: var(--text);
+  background:
+    radial-gradient(circle at 12% 8%, rgba(10,132,255,0.16), transparent 26%),
+    radial-gradient(circle at 86% 16%, rgba(194,65,93,0.14), transparent 24%),
+    radial-gradient(circle at 80% 78%, rgba(255,204,102,0.18), transparent 28%),
+    linear-gradient(180deg, #fbfaf7 0%, #f2f5f8 46%, #f7f4ee 100%);
+  background-attachment: fixed;
+}
+
+body::before {
+  background:
+    linear-gradient(90deg, rgba(23,32,51,0.035) 1px, transparent 1px),
+    linear-gradient(rgba(23,32,51,0.028) 1px, transparent 1px);
+  background-size: 88px 88px;
+  opacity: 0.65;
+  backdrop-filter: none;
+}
+
+body::after {
+  display: none;
+}
+
+nav {
+  align-items: center;
+  padding: 0.85rem 1rem 0.85rem 1.1rem;
+  border: 1px solid rgba(23,32,51,0.1);
+  border-radius: 24px;
+  background: rgba(255,255,255,0.82);
+  box-shadow: 0 18px 45px rgba(23,32,51,0.09);
+  backdrop-filter: blur(22px) saturate(1.15);
+}
+
+.nav-logo {
+  display: grid;
+  gap: 0.12rem;
+  color: var(--text);
+  line-height: 1.05;
+}
+
+.nav-logo-name {
+  color: var(--text);
+  font-size: 0.96rem;
+  font-weight: 750;
+}
+
+.nav-logo-role {
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 500;
+}
+
+.nav-links {
+  gap: 0.25rem;
+  padding: 0.2rem;
+  border-radius: 999px;
+  background: rgba(23,32,51,0.045);
+}
+
+.nav-links a {
+  color: #3d4655;
+  padding: 0.52rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+}
+
+.nav-links a:hover {
+  color: var(--text);
+  background: rgba(255,255,255,0.88);
+}
+
+.nav-resume {
+  color: #fff;
+  background: var(--text);
+  box-shadow: 0 10px 24px rgba(23,32,51,0.16);
+}
+
+.nav-resume:hover {
+  color: #fff;
+  background: #0f172a;
+}
+
+#hero {
+  min-height: auto;
+  padding: 9rem 1.5rem 5rem;
+}
+
+.hero-inner {
+  width: min(100%, 1120px);
+  max-width: 1120px;
+  grid-template-columns: minmax(0, 1.4fr) minmax(260px, 0.75fr);
+  justify-items: stretch;
+  align-items: center;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  text-align: left;
+  padding: clamp(2rem, 5vw, 4rem);
+  border: 1px solid rgba(23,32,51,0.1);
+  border-radius: 32px;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.96), rgba(255,255,255,0.76)),
+    radial-gradient(circle at 12% 10%, rgba(10,132,255,0.12), transparent 32%);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(20px) saturate(1.05);
+}
+
+.hero-content {
+  justify-items: start;
+}
+
+.hero-portrait-wrap {
+  order: 0;
+  justify-self: end;
+}
+
+.hero-portrait {
+  width: min(100%, 300px);
+  height: auto;
+  aspect-ratio: 4 / 5;
+  border-radius: 30px;
+  border: 1px solid rgba(23,32,51,0.12);
+  box-shadow: 0 24px 55px rgba(23,32,51,0.16);
+  background: #e8edf5;
+}
+
+.availability {
+  order: 0;
+  margin: 0 0 1.1rem;
+  color: #1f6f43;
+  background: #e8f7ee;
+  border: 1px solid rgba(31,111,67,0.16);
+  box-shadow: none;
+}
+
+.availability .dot {
+  background: #2fbf71;
+}
+
+.hero-tag {
+  justify-content: flex-start;
+  color: var(--accent2);
+  font-weight: 650;
+  margin-bottom: 1rem;
+}
+
+.hero-name {
+  color: var(--text);
+  text-shadow: none;
+  font-size: clamp(3rem, 7vw, 5.8rem);
+  line-height: 0.95;
+}
+
+.hero-handle {
+  max-width: 680px;
+  color: #263246;
+  font-size: clamp(1.25rem, 2.2vw, 1.8rem);
+  font-weight: 650;
+  line-height: 1.25;
+  margin: 1.15rem 0 1.1rem;
+}
+
+.hero-desc {
+  max-width: 680px;
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.72;
+}
+
+.hero-pills {
+  justify-content: flex-start;
+  max-width: 680px;
+}
+
+.pill,
+.pill.purple,
+.pill.pink {
+  color: #344154;
+  background: #f5f7fb;
+  border-color: rgba(23,32,51,0.1);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.9);
+}
+
+.hero-cta {
+  width: auto;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.hero-cta .btn-primary {
+  grid-column: auto;
+}
+
+.btn-primary {
+  color: #fff;
+  background: var(--text);
+}
+
+.btn-primary:hover {
+  color: #fff;
+  background: #0f172a;
+}
+
+.btn-outline,
+.social-link {
+  color: #344154;
+  background: rgba(255,255,255,0.72);
+  border-color: rgba(23,32,51,0.12);
+}
+
+.btn-outline:hover,
+.social-link:hover {
+  color: var(--text);
+  border-color: rgba(23,32,51,0.24);
+  background: #fff;
+}
+
+section > .inner,
+#about .inner,
+#skills .inner,
+#projects .inner,
+#snapshot .inner,
+#github .inner,
+#contact .inner {
+  border: 1px solid rgba(23,32,51,0.1);
+  border-radius: 28px;
+  background: rgba(255,255,255,0.84);
+  box-shadow: 0 20px 60px rgba(23,32,51,0.08);
+  backdrop-filter: blur(18px) saturate(1.02);
+}
+
+.section-label,
+.project-preview-kicker,
+.project-preview-label {
+  color: var(--accent2);
+}
+
+.section-label::before {
+  background: var(--accent);
+}
+
+.section-title,
+.about-text p strong,
+.snapshot-card strong,
+.github-card strong,
+.experience-body h4,
+.stat-num,
+.github-metric,
+.experience-role,
+.project-preview-label,
+.project-preview-kicker {
+  color: var(--text);
+}
+
+.section-sub,
+.about-text p,
+.snapshot-card p,
+.github-card p,
+.skill-card p,
+.project-preview-desc,
+.project-preview-text,
+.project-preview-features,
+.experience-bullets,
+.experience-dates,
+.stat-label,
+.skill-tag,
+.experience-tag,
+.project-list-meta {
+  color: var(--muted);
+}
+
+.stat-box,
+.snapshot-card,
+.github-card,
+.skill-card,
+.project-list-item,
+.project-preview,
+.experience-card {
+  border: 1px solid rgba(23,32,51,0.1);
+  background: #fff;
+  box-shadow: 0 12px 34px rgba(23,32,51,0.06);
+}
+
+.project-list-item:hover,
+.project-list-item.active,
+.skill-card:hover,
+.experience-card:hover {
+  border-color: rgba(10,132,255,0.3);
+  background: #fbfdff;
+}
+
+.project-preview-visual {
+  background:
+    linear-gradient(135deg, rgba(10,132,255,0.11), rgba(194,65,93,0.08)),
+    #f4f7fb;
+  border-bottom-color: rgba(23,32,51,0.1);
+}
+
+.tech-badge,
+.tech-badge.purple,
+.tech-badge.pink,
+.skill-icon,
+.project-thumb {
+  color: #344154;
+  background: #f5f7fb;
+  border-color: rgba(23,32,51,0.1);
+}
+
+.project-preview-section,
+.experience-meta,
+footer {
+  border-color: rgba(23,32,51,0.1);
+}
+
+.contact-email {
+  color: var(--text);
+  border-bottom-color: rgba(23,32,51,0.3);
+}
+
+footer {
+  background: rgba(255,255,255,0.72);
+}
+
+footer p,
+footer .accent {
+  color: var(--muted);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(23,32,51,0.3);
+}
+
+@media (max-width: 1024px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .hero-content,
+  .hero-pills,
+  .hero-cta,
+  .hero-tag {
+    justify-items: center;
+    justify-content: center;
+  }
+  .hero-portrait-wrap {
+    order: -1;
+    justify-self: center;
+  }
+}
+
+@media (max-width: 768px) {
+  nav {
+    position: absolute;
+    top: 0.75rem;
+    border-radius: 22px;
+  }
+  .nav-logo {
+    width: 100%;
+    text-align: center;
+    justify-items: center;
+  }
+  .nav-links {
+    width: 100%;
+    overflow-x: auto;
+    justify-content: flex-start;
+    scrollbar-width: none;
+  }
+  .nav-links::-webkit-scrollbar {
+    display: none;
+  }
+  .nav-resume {
+    margin: 0 auto;
+  }
+  #hero {
+    padding-top: 12.5rem;
+  }
+  .hero-inner {
+    padding: 2rem 1.35rem;
+    border-radius: 26px;
+  }
+  .hero-portrait {
+    width: min(68vw, 220px);
+    height: auto;
+    border-radius: 26px;
+  }
+  .hero-cta {
+    width: 100%;
+  }
+  .hero-cta .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -1403,11 +1810,14 @@ footer .accent {
 
 <!-- NAV -->
 <nav>
-  <a href="#hero" class="nav-logo">JBRINK<span>.DEV</span></a>
+  <a href="#hero" class="nav-logo">
+    <span class="nav-logo-name">Jibryll Brinkley</span>
+    <span class="nav-logo-role">iOS Engineer</span>
+  </a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#experience">Experience</a></li>
-    <li><a href="#projects">iOS Projects</a></li>
+    <li><a href="#projects">Projects</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#github">GitHub</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -1422,18 +1832,18 @@ footer .accent {
   <div class="court-arc" style="top: 8%; right: -260px;"></div>
   <div class="hero-inner">
     <div class="hero-content">
-      <div class="availability"><span class="dot"></span>Seeking iOS opportunities</div>
-      <div class="hero-tag">iOS Engineer (SwiftUI / UIKit)</div>
+      <div class="availability"><span class="dot"></span>Open to iOS roles</div>
+      <div class="hero-tag">SwiftUI · UIKit · Apple platforms</div>
       <h1 class="hero-name">
         Jibryll Brinkley
       </h1>
-      <div class="hero-handle">iOS Developer · Swift · SwiftUI</div>
+      <div class="hero-handle">I build native iPhone apps with product taste and engineering discipline.</div>
       <p class="hero-desc">
-iOS Engineer building production Swift and SwiftUI apps across Apple's framework ecosystem. Experienced in Swift, SwiftUI, UIKit, and MVVM, with a proven track record of building production-ready features from product specs, backend systems, and Figma designs.
+iOS-first software engineer with internship experience, 46 Swift repositories, and a portfolio of SwiftUI, MapKit, Core ML, API-driven, and product-focused work. I like building apps that feel useful, clear, and ready for real users.
       </p>
       <div class="hero-pills" id="heroPills"></div>
       <div class="hero-cta">
-        <a href="#projects" class="btn btn-primary">View iOS Projects →</a>
+        <a href="#projects" class="btn btn-primary">View Projects →</a>
         <a href="assets/iOSResume_JBrinkley2026.pdf" class="btn btn-outline" target="_blank" rel="noopener noreferrer">Download Résumé ↗</a>
         <a href="https://github.com/BryllieBrinkley" class="btn btn-outline" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
       </div>
@@ -1451,9 +1861,9 @@ iOS Engineer building production Swift and SwiftUI apps across Apple's framework
   <div class="inner">
     <div class="about-text reveal">
       <div class="section-label">About</div>
-      <h2 class="section-title">iOS Engineer <span style="color:var(--accent)">specializing in Swift, SwiftUI, and production app development</span></h2>
-      <p>My name is <strong>Jibryll Brinkley</strong>, and I am an iOS-first software engineer with a B.S. in Applied Computer Science, concentrating in iOS development. I am also currently pursuing an AAS in Artificial Intelligence (expected August 2027).</p>
-      <p>My work is rooted in native iOS development (Swift, SwiftUI, UIKit, MVVM, API integration, and responsive mobile UI) with additional expertise in AI and machine learning through Python-based projects, model evaluation at Handshake AI, and coursework.</p>
+      <h2 class="section-title">iOS Engineer <span style="color:var(--accent)">focused on Swift, SwiftUI, and product-quality mobile apps</span></h2>
+      <p>My name is <strong>Jibryll Brinkley</strong>. I am an iOS-first software engineer with a B.S. in Applied Computer Science and an iOS concentration. I am also completing an AAS in Artificial Intelligence, expected August 2027.</p>
+      <p>I build native iOS apps with Swift, SwiftUI, UIKit, MVVM, APIs, and Apple frameworks. My AI and Python work supports that product engineering focus.</p>
       </div>
     <div class="about-stats reveal" id="statsGrid"></div>
   </div>
@@ -1466,21 +1876,21 @@ iOS Engineer building production Swift and SwiftUI apps across Apple's framework
   <div class="inner">
     <div class="reveal">
       <div class="section-label">Summary</div>
-      <h2 class="section-title">Execution-Driven iOS Engineer</h2>
-      <p class="section-sub">SwiftUI internship experience, 46 Swift Github repositories, Apple platform API development, and ML/AI/Python experience.</p>
+      <h2 class="section-title">iOS Engineer Snapshot</h2>
+      <p class="section-sub">SwiftUI internship experience, 46 Swift repositories, Apple framework work, and supporting AI/Python skills.</p>
     </div>
     <div class="snapshot-grid reveal">
       <article class="snapshot-card">
         <h3>Role fit</h3>
-        <p><strong>iOS engineer</strong> focused on Swift, SwiftUI, UIKit, MVVM, REST APIs, reusable UI, debugging, and mobile app architecture.</p>
+        <p><strong>iOS engineer</strong> focused on Swift, SwiftUI, UIKit, MVVM, REST APIs, reusable UI, debugging, and app architecture.</p>
       </article>
       <article class="snapshot-card">
-        <h3>Professional proof</h3>
-        <p><strong>2 iOS internships</strong> with hands-on experience in SwiftUI feature development, Figma-to-code implementation, secure API integration, and Agile methodologies.</p>
+        <h3>Internships</h3>
+        <p><strong>2 iOS internships</strong> spanning SwiftUI features, Figma-to-code work, secure API integration, and Agile delivery.</p>
       </article>
       <article class="snapshot-card">
-        <h3>Project proof</h3>
-        <p><strong>46 Swift repositories</strong> showcasing consistent iOS development across SwiftUI, UIKit, networking, persistence, Apple frameworks, and production-style mobile applications.</p>
+        <h3>Swift repositories</h3>
+        <p><strong>46 Swift repositories</strong> across SwiftUI, UIKit, networking, persistence, Apple frameworks, and production-style apps.</p>
       </article>
     </div>
   </div>
@@ -1492,9 +1902,9 @@ iOS Engineer building production Swift and SwiftUI apps across Apple's framework
 <section id="experience">
   <div class="inner">
     <div class="reveal">
-      <div class="section-label">Experience</div>
-      <h2 class="section-title">Professional experience.</h2>
-<p class="section-sub">iOS engineering internships, secure mobile systems, and AI evaluation roles.</p>
+      <div class="section-label">Work</div>
+      <h2 class="section-title">Experience</h2>
+<p class="section-sub">iOS internships, secure mobile systems, and AI evaluation work.</p>
     </div>
     <div class="experience-list reveal" id="experienceList" style="display: grid; gap: 1.5rem;"></div>
   </div>
@@ -1507,8 +1917,8 @@ iOS Engineer building production Swift and SwiftUI apps across Apple's framework
   <div class="inner">
     <div class="reveal">
       <div class="section-label">Skills</div>
-      <h2 class="section-title">Technical skills.</h2>
-      <p class="section-sub">Swift, SwiftUI, UIKit, MVVM, APIs, persistence, testing, Apple platform APIs, and supporting AI/Python skills.</p>
+      <h2 class="section-title">Technical Skills</h2>
+      <p class="section-sub">Swift, SwiftUI, UIKit, MVVM, APIs, persistence, testing, Apple frameworks, and supporting AI/Python.</p>
     </div>
     <div class="skills-grid" id="skillsGrid"></div>
   </div>
@@ -1520,10 +1930,8 @@ iOS Engineer building production Swift and SwiftUI apps across Apple's framework
 <section id="projects">
   <div class="inner">
     <div class="reveal">
-      <div class="section-label">Featured Projects</div>
-      <h2 class="section-title">iOS Independent Projects</h2>
-      <p class="section-sub">
-      Primary experience in native iOS development, with additional exposure to AI systems, machine learning, and full-stack web development.</p>
+      <h2 class="section-title">Projects</h2>
+      <p class="section-sub">Native iOS work first, with selected AI, ML, web, and client projects.</p>
     </div>
     <div class="project-browser reveal">
       <div class="project-list" id="projectList" aria-label="Project list"></div>
@@ -1657,20 +2065,20 @@ iOS Engineer building production Swift and SwiftUI apps across Apple's framework
 <section id="github">
   <div class="inner">
     <div class="reveal">
-      <div class="section-label">GitHub</div>
-      <h2 class="section-title">GitHub proof.</h2>
-      <p class="section-sub">I use GitHub to document my engineering projects, ranging from building native iOS apps with SwiftUI to developing complex AI and machine learning models in Python.</p>
+      <div class="section-label">Code</div>
+      <h2 class="section-title">GitHub</h2>
+      <p class="section-sub">Public work across native iOS apps, API integrations, and supporting AI/ML projects.</p>
     </div>
     <div class="github-grid reveal">
       <article class="github-card">
         <span class="github-metric">63</span>
         <h3>Public repositories</h3>
-        <p>Engineering work spanning native iOS apps, API integration, and supporting Python-based AI and ML systems.</p>
+        <p>Native iOS apps, API integrations, and supporting Python AI/ML systems.</p>
 </article>
       <article class="github-card">
         <span class="github-metric">46</span>
         <h3>Swift-focused repositories</h3>
-        <p>Core iOS development using Swift, SwiftUI, UIKit, MapKit, Core ML, SwiftData, and Apple platform APIs. Includes production-style architecture patterns such as MVVM, reusable UI components, networking stacks, persistence layers, and system-level feature exploration.</p>
+        <p>Swift, SwiftUI, UIKit, MapKit, Core ML, SwiftData, MVVM, reusable UI, networking, and persistence.</p>
       </article>
       <article class="github-card">
         <span class="github-metric">AI + iOS</span>
@@ -1681,7 +2089,7 @@ iOS Engineer building production Swift and SwiftUI apps across Apple's framework
     <p>→ REST APIs, URLSession & async/await</p>
     <p>→ SwiftData & local persistence</p>
     <p>→ Reusable UI views and components</p>
-    <p>→ Architecture and design patterns (MVC, MVVM) </p>
+    <p>→ MVC and MVVM architecture</p>
     </article>
     </div>
   </div>
@@ -1754,14 +2162,14 @@ skills: [
     icon: 'API',
     title: 'Mobile Product Implementation',
     accent: '#00f5c4',
-    description: 'API-driven product flows, Figma-to-code implementation, reusable components, caching, debugging, and launch-readiness work.',
+    description: 'API-driven product flows, Figma-to-code work, reusable components, caching, debugging, and launch readiness.',
     tags: ['REST APIs', 'JSON', 'State Management', 'Reusable Components', 'Design Systems', 'Figma', 'Caching', 'Debugging', 'Performance Monitoring', 'Agile']
   },
   {
     icon: 'AI',
     title: 'Supporting AI & Backend',
     accent: '#7b6fff',
-    description: 'Applied AI and backend skills that support product engineering without replacing the iOS-first focus.',
+    description: 'Applied AI and backend skills that support mobile product engineering.',
     tags: ['Python', 'FastAPI', 'PostgreSQL', 'Supabase', 'Stripe', 'OpenAI', 'RAG', 'Embeddings', 'pandas', 'scikit-learn', 'LLM Evaluation']
   }
 ],
@@ -1770,13 +2178,13 @@ skills: [
         role: 'iOS Engineer Intern',
         company: 'AaronBux Wealth Management Company',
         dates: 'January 2025 – April 2025',
-        focus: 'Fintech iOS development focused on secure architecture, compliance workflows, and scalable SwiftUI systems.',
+        focus: 'Fintech iOS work across secure architecture, compliance flows, and SwiftUI systems.',
         bullets: [
-          'Built reusable SwiftUI component library and established app-wide MVVM state architecture for production feature development.',
+          'Built reusable SwiftUI components and app-wide MVVM state architecture.',
           'Designed secure networking layer using REST APIs with AWS KMS, Secrets Manager, and API Gateway for encrypted data workflows.',
           'Developed PDFKit-based compliance flows that increased completion rates by 30%.',
-          'Translated Figma designs into responsive SwiftUI interfaces across multiple device sizes with reusable layout patterns.',
-          'Participated in full Agile lifecycle (sprint planning, standups, reviews, retrospectives) contributing to production releases.'
+          'Translated Figma designs into responsive SwiftUI screens.',
+          'Contributed to sprint planning, reviews, retrospectives, and production releases.'
         ],
         tags: ['Swift', 'SwiftUI', 'MVVM', 'UIKit', 'REST APIs', 'PDFKit', 'AWS (KMS, Secrets Manager, API Gateway)', 'XCTest']
       },
@@ -1784,14 +2192,14 @@ skills: [
         role: 'AI / iOS Engineer Intern',
         company: 'Escape Enterprises',
         dates: 'August 2024 – January 2025',
-        focus: 'Production mobile development for a Flutter-based iOS application focused on AI-driven personalization, system stability, and release execution.',
+        focus: 'Production mobile work on a Flutter-based iOS app with AI personalization and release support.',
         bullets: [
-          'Built and shipped production features in a Flutter-based iOS app, contributing to core UI flows and application architecture.',
+          'Shipped production features across core UI flows and app architecture.',
           'Integrated LLM-powered personalization system to generate dynamic, user-specific wellness experiences within the app.',
           'Resolved 30+ launch-blocking issues across state management, API integration, and UI consistency during release cycles.',
           'Improved app stability to 98% crash-free sessions through debugging, lifecycle fixes, and production monitoring.',
           'Mentored junior developers and improved team efficiency by 40%.',
-          'Collaborated with product and design teams to deliver production-ready features under tight iteration and release timelines.'
+          'Worked with product and design teams under tight release timelines.'
         ],
         tags: ['Flutter', 'Dart', 'Mobile Architecture', 'REST APIs', 'LLM Integration', 'Debugging']
       },
@@ -1799,11 +2207,11 @@ skills: [
         role: 'Model Evaluator · Multimodal & Annotation',
         company: 'Handshake AI',
         dates: 'December 2025 – Present',
-        focus: 'AI model evaluation focused on computer vision quality, reasoning accuracy, and dataset integrity.',
+        focus: 'AI evaluation across computer vision quality, reasoning accuracy, and dataset integrity.',
         bullets: [
           'Evaluated computer vision outputs using structured rubrics for correctness, edge cases, and model reliability.',
-          'Annotated multimodal datasets for training and benchmarking AI systems across visual reasoning tasks.',
-          'Identified and flagged model failure patterns, improving dataset consistency and evaluation accuracy.',
+          'Annotated multimodal datasets for visual reasoning tasks.',
+          'Flagged model failure patterns to improve dataset and evaluation quality.',
           'Escalated edge-case behavior and contributed to refinement of evaluation guidelines.'
         ],
         tags: ['AI Evaluation', 'Computer Vision', 'Rubric QA', 'Data Quality', 'Multimodal Systems']
@@ -1812,12 +2220,12 @@ skills: [
         role: 'AI Trainer',
         company: 'Outlier AI',
         dates: 'Contract / AI training',
-        focus: 'AI alignment and response evaluation for large language model systems.',
+        focus: 'LLM response evaluation and alignment support.',
         bullets: [
           'Evaluated LLM outputs for correctness, reasoning depth, and instruction adherence under structured scoring rubrics.',
           'Designed adversarial prompts to surface model failure cases and edge reasoning boundaries.',
           'Supported RLHF-style feedback loops improving response consistency and alignment quality.',
-          'Validated model outputs against strict evaluation guidelines to ensure production-level quality standards.'
+          'Validated outputs against strict quality guidelines.'
         ],
         tags: ['Prompt Engineering', 'LLM Evaluation', 'RLHF', 'Quality Assurance', 'Quality Control']
       }
@@ -1830,12 +2238,12 @@ skills: [
       category: 'Flagship iOS',
       preview: 'NASA',
       desc: 'A SwiftUI space discovery app featuring NASA’s Astronomy Picture of the Day, searchable media, and saved discoveries.',
-      problem: 'NASA provides incredible public content, but its astronomy images and searchable media are spread across separate services and can be difficult to explore in one mobile experience.',
-      built: 'Built a polished SwiftUI app that combines NASA’s Astronomy Picture of the Day with searchable space imagery, category-based discovery, detailed media views, and persistent saved items.',
-      architecture: 'MVVM architecture with SwiftUI views, @Observable and @MainActor view models, dedicated networking services, Codable models, async/await API requests, and SwiftData persistence.',
-      challenges: 'Integrated NASA APIs with different response structures, handled both image and video APOD content, decoded nested JSON, managed API keys securely, and created reliable loading and error states.',
-      tradeoffs: 'Used AsyncImage for straightforward remote image loading and SwiftData for lightweight local persistence. More advanced image caching and offline synchronization remain future improvements.',
-      results: 'Delivered a public, API-driven iOS project with reusable components, asynchronous networking, persistent saved content, full-screen media viewing, and a polished space-inspired interface.',
+      problem: 'NASA content is split across services, making daily astronomy content and media search harder to explore in one app.',
+      built: 'Built a SwiftUI app that combines APOD, searchable imagery, category browsing, media details, and saved items.',
+      architecture: 'SwiftUI and MVVM with @Observable/@MainActor view models, networking services, Codable models, async/await, and SwiftData.',
+      challenges: 'Handled different API response shapes, image and video APOD content, nested JSON, API keys, loading states, and errors.',
+      tradeoffs: 'Used AsyncImage and SwiftData for a lightweight build; deeper caching and offline sync are future improvements.',
+      results: 'Delivered a public API-driven iOS app with reusable components, persistence, full-screen media, and a polished UI.',
       tech: [
         'Swift',
         'SwiftUI',
@@ -1859,18 +2267,18 @@ skills: [
         'Loading and error states',
         'Reusable SwiftUI components'
       ],
-      role: 'Independent project. Designed and developed the SwiftUI interface, MVVM architecture, API integrations, data models, persistence layer, error handling, and visual design.',
+      role: 'Independent project. Built the SwiftUI interface, MVVM structure, API integrations, models, persistence, error handling, and visual design.',
       status: 'Public GitHub repository.',
-      detail: 'Strong iOS engineering signal: SwiftUI, MVVM, async/await networking, multiple REST API integrations, Codable data modeling, SwiftData persistence, and complete mobile product ownership.',
+      detail: 'Strong iOS signal: SwiftUI, MVVM, async/await networking, REST APIs, Codable models, SwiftData, and complete app ownership.',
       cta: 'View GitHub',
       url: 'https://github.com/BryllieBrinkley/NASAExplorer',
       screenshots: [
-        { src: 'assets/nasa-explorer-media-detail.png', alt: 'NASA Explorer NASA media detail screen', type: 'phone' },
         { src: 'assets/nasa-explorer-home.png', alt: 'NASA Explorer home explore screen with browse media and astronomy picture of the day', type: 'phone' },
         { src: 'assets/nasa-explorer-apod.png', alt: 'NASA Explorer astronomy picture of the day detail screen', type: 'phone' },
+        { src: 'assets/nasa-explorer-media-detail.png', alt: 'NASA Explorer NASA media detail screen', type: 'phone' },
         { src: 'assets/nasa-explorer-launch.png', alt: 'NASA Explorer media detail screen showing Voyager 1 launch', type: 'phone' },
-        { src: 'assets/nasa-explorer-planets-list.png', alt: 'NASA Explorer planets media list screen', type: 'phone' },
         { src: 'assets/nasa-explorer-search-results.png', alt: 'NASA Explorer search results screen for exoplanet media', type: 'phone' },
+        { src: 'assets/nasa-explorer-planets-list.png', alt: 'NASA Explorer planets media list screen', type: 'phone' },
         { src: 'assets/nasa-explorer-planets-loading.png', alt: 'NASA Explorer planets loading screen', type: 'phone' },
         { src: 'assets/nasa-explorer-saved-empty.png', alt: 'NASA Explorer saved items empty state screen', type: 'phone' }
       ]
@@ -1881,11 +2289,11 @@ skills: [
       preview: 'DAY',
       desc: 'A SwiftUI morning newspaper that distills a user’s day into one calm, focused edition.',
       problem: 'Daily essentials are scattered across apps, forcing context-switching and making it harder to start the day informed.',
-      built: 'Built an editorial front page with clear hierarchy, reusable article components, and a grid layout ready to plug in live sources. The MVP foundation includes a masthead, date and weather slot, section scaffolding, share and print affordances, and previews for rapid iteration.',
-      architecture: 'SwiftUI and MVVM patterns with small composable views, modern Observation scoped per section, async/await-ready service boundaries for WeatherKit, Calendar, Reminders, Mail, and package sources, and integrations designed to be added incrementally.',
-      challenges: 'Created a newspaper-inspired UI that remains modular and responsive, reused editorial components across heterogeneous content, designed permission-aware flows without blocking the core UI, and isolated unfinished integrations to keep the app shippable.',
+      built: 'Built an editorial front page with reusable article cards, Grid/GridRow layout, masthead, date, weather slot, section scaffolding, and preview states.',
+      architecture: 'SwiftUI and MVVM with composable views, scoped Observation state, and async-ready service boundaries for weather, calendar, reminders, mail, and packages.',
+      challenges: 'Kept the newspaper UI modular and responsive while supporting varied content, permission-aware flows, and unfinished integrations.',
       tradeoffs: 'Uses sample data for several sections to validate UX and layout while production authentication and third-party APIs are deferred to the next milestones.',
-      results: 'Functional editorial layout with reusable components, weather header and sections scaffolded end-to-end, and a clear path to live WeatherKit/Core Location, Calendar, Reminders, Mail, package tracking, share, print, persistence, accessibility, and on-device AI summaries.',
+      results: 'Functional editorial layout with reusable components, scaffolded sections, and a path to live sources, persistence, accessibility, and on-device summaries.',
       tech: ['Swift', 'SwiftUI', 'MVVM', 'Observation', 'Swift Concurrency', 'SF Symbols', 'WeatherKit/Core Location planned', 'Xcode'],
       features: [
         'SwiftUI front page',
@@ -1897,17 +2305,17 @@ skills: [
         'Packages and Your World sections',
         'Share and print placeholders'
       ],
-      role: 'Independent Founder/Engineer.',
+      role: 'Independent founder/engineer. Defined the product, designed the UI, built reusable components, scaffolded sections, and set service boundaries.',
       status: 'Active MVP build.',
-      detail: 'Strong iOS product signal: SwiftUI composition, MVVM, permission-aware design, clear strategy, and end-to-end ownership of a native Apple-platform MVP built to scale.',
+      detail: 'Strong iOS product signal: SwiftUI composition, MVVM, permission-aware design, integration planning, and end-to-end MVP ownership.',
       cta: 'View GitHub',
       url: 'https://github.com/BryllieBrinkley/Dayline-iOS',
       screenshots: [
+        { src: 'assets/dayline-screenshot5.png', alt: 'Dayline newspaper-style daily edition detail screen', type: 'phone' },
         { src: 'assets/dayline-screenshot1.png', alt: 'Dayline SwiftUI today screen with daily focus, tasks, schedule, and weather', type: 'phone' },
-        { src: 'assets/dayline-screenshot2.png', alt: 'Dayline SwiftUI sources screen with app connection permissions', type: 'phone' },
         { src: 'assets/dayline-screenshot3.png', alt: 'Dayline SwiftUI past editions screen with previous daily editions', type: 'phone' },
         { src: 'assets/dayline-screenshot4.png', alt: 'Dayline SwiftUI customize screen with daily edition section toggles', type: 'phone' },
-        { src: 'assets/dayline-screenshot5.png', alt: 'Dayline newspaper-style daily edition detail screen', type: 'phone' }
+        { src: 'assets/dayline-screenshot2.png', alt: 'Dayline SwiftUI sources screen with app connection permissions', type: 'phone' }
       ]
     },
     {
@@ -1917,15 +2325,15 @@ skills: [
       desc: 'A SwiftUI MapKit app for finding nearby restaurants, gas stations, coffee shops, and local places.',
       problem: 'Users need a simple map-based way to search nearby places, inspect details, and route to a destination.',
       built: 'Built a SwiftUI MapKit app with location permissions, nearby search, place details, and route-planning UI.',
-      architecture: 'SwiftUI views backed by MapKit and Core Location flows, state-driven search results, permission handling, and route display logic.',
+      architecture: 'SwiftUI views backed by MapKit, Core Location, state-driven search, permission handling, and route display logic.',
       challenges: 'Managing location permissions, updating map state, presenting local search results, and keeping route changes clear in the UI.',
       tradeoffs: 'Used native MapKit and Core Location instead of a third-party SDK to keep the project Apple-platform focused.',
-      results: 'Public GitHub repo showing MapKit local search, location permission flow, place details, and route-planning behavior.',
+      results: 'Public repo showing MapKit search, location permissions, place details, and route planning.',
       tech: ['Swift', 'SwiftUI', 'MapKit', 'Core Location', 'MVVM', 'Xcode'],
       features: ['Map interface', 'Nearby search', 'Place details', 'Route planning', 'Location permissions'],
       role: 'Independent project. Built the SwiftUI views, MapKit integration, location flow, and local search UI.',
       status: 'Public GitHub repo.',
-      detail: 'Strong Apple platform API proof through MapKit, Core Location, SwiftUI state, and route planning.',
+      detail: 'Apple platform proof through MapKit, Core Location, SwiftUI state, and route planning.',
       cta: 'View GitHub',
       url: 'https://github.com/BryllieBrinkley/NearMe',
       screenshots: [
@@ -1934,39 +2342,46 @@ skills: [
       ]
     },
     {
-      title: 'PicDetect',
-      category: 'iOS',
-      preview: 'ML',
-      desc: 'An iOS image-recognition app powered by CoreML and Inception v3.',
-      problem: 'Image classification models need a usable mobile capture flow before users can get practical predictions.',
-      built: 'Built an iOS app that captures images and displays on-device CoreML predictions.',
-      architecture: 'UIKit camera flow connected to a CoreML inference layer, image input handling, prediction execution, and result display UI.',
-      challenges: 'Handling camera permissions, preparing image input for the model, integrating CoreML, and presenting results clearly.',
-      tradeoffs: 'On-device CoreML improves privacy and latency but limits model flexibility compared with server-side inference.',
-      results: 'Public GitHub repo demonstrating an iOS camera workflow and Apple-native machine learning integration.',
-      tech: ['Swift', 'UIKit', 'CoreML', 'Inception v3', 'Camera', 'Xcode'],
-      features: ['Camera capture', 'On-device image classification', 'CoreML integration', 'Prediction display'],
-      role: 'Independent project. Built the iOS camera flow, CoreML integration, and prediction UI.',
-      status: 'Public GitHub repo.',
-      detail: 'On-device CoreML integration proof — camera flow, model inference, and Apple-native machine learning.',
-      cta: 'View GitHub',
-      url: 'https://github.com/BryllieBrinkley/PicDetect'
+      title: 'Imagery Red Carpet Salon',
+      category: 'Client Web',
+      preview: 'SALON',
+      desc: 'A salon website with booking, product shopping, social proof, and brand-forward presentation.',
+      problem: 'The salon needed one destination for services, booking, products, contact information, and social content.',
+      built: 'Built a responsive site with a red-carpet brand system, clear navigation, booking and shop entry points, product pages, cart flow, and gallery sections.',
+      architecture: 'Squarespace site with structured home, booking, shop, contact, cart, category, and social integration pages.',
+      challenges: 'Balanced bold branding with usable navigation, clear shopping flows, and visual content from multiple parts of the business.',
+      tradeoffs: 'Used a managed platform to prioritize maintainability, ecommerce, and fast client updates over custom code.',
+      results: 'Live production site supporting discovery, booking, product shopping, checkout, contact access, and social engagement.',
+      tech: ['Squarespace', 'Responsive Web Design', 'E-commerce', 'Product Catalog', 'Cart Flow', 'Booking Links', 'Social Embeds', 'Brand Design'],
+      features: ['Salon landing page', 'Booking entry point', 'Product shop', 'Shopping cart', 'Contact flow', 'Instagram gallery', 'Social links', 'Responsive navigation'],
+      role: 'Client website project. Built the site structure, navigation, shop, cart, visual sections, and brand-aligned layouts.',
+      status: 'Live production website.',
+      detail: 'Client-facing product work: turning a real business brand into a usable site with booking, ecommerce, social proof, and maintainable content.',
+      cta: 'View Website',
+      url: 'https://www.imageryredcarpetsalon.com/',
+      screenshots: [
+        { src: 'assets/imagery(1).png', alt: 'Imagery Red Carpet Salon home page with brand hero artwork', type: 'landscape' },
+        { src: 'assets/imagery(3).png', alt: 'Imagery Red Carpet Salon shop page with product grid', type: 'landscape' },
+        { src: 'assets/imagery(4).png', alt: 'Imagery Red Carpet Salon social gallery page with Instagram-style media grid', type: 'landscape' },
+        { src: 'assets/imagery(2).png', alt: 'Imagery Red Carpet Salon shopping cart checkout page', type: 'landscape' }
+      ]
     },
     {
       title: 'GroupRide',
       category: 'Product',
       preview: 'GR',
-      desc: 'A transportation marketplace for booking, dispatch, payments, and operational dashboards.',
-      problem: 'Transportation operators should not need separate tools for rider requests, dispatch, pricing, payment, and coordination.',
+      desc: 'A transportation marketplace for booking, dispatch, payments, and dashboards.',
+      problem: 'Transportation operators need one flow for rider requests, dispatch, pricing, payment, and coordination.',
       built: 'Built a full-stack booking flow with rider requests, AI-assisted driver assignment, route pricing, Stripe payments, dashboards, and realtime updates.',
-      architecture: 'Next.js frontend with Supabase/PostgreSQL data, protected routes, Stripe payment flow, Google Maps API integration, and realtime booking state.',
-      challenges: 'Coordinating multi-role dashboards, payment state, route-based pricing, and realtime operational updates.',
-      tradeoffs: 'Web implementation proves product engineering range, while the project stays secondary to the iOS-first portfolio narrative.',
-      results: 'Active deployed build showing booking, dispatch, payment, and dashboard workflows.',
+      architecture: 'Next.js frontend with Supabase/PostgreSQL data, protected routes, Stripe, Google Maps API, and realtime booking state.',
+      challenges: 'Coordinated multi-role dashboards, payment state, route pricing, and realtime operational updates.',
+      tradeoffs: 'Web build shows product range while staying secondary to the iOS-first portfolio.',
+      results: 'Active deployed build with booking, dispatch, payment, and dashboard workflows.',
       tech: ['Next.js', 'TypeScript', 'React', 'Tailwind CSS', 'Supabase', 'PostgreSQL', 'Stripe', 'Google Maps API', 'Zod'],
       features: ['AI-assisted dispatch', 'Realtime booking updates', 'Multi-role dashboards', 'Stripe payments', 'Route-based pricing', 'Protected routes'],
       role: 'Independent project. Built the full-stack flow, backend logic, dashboards, and realtime updates.',
       status: 'Active build.',
+      detail: 'Product engineering range: marketplace flows, protected dashboards, payments, maps, realtime state, and operational tooling.',
       cta: 'View Project',
       url: 'https://v0-goupryde.vercel.app/',
       screenshots: [
@@ -1977,17 +2392,18 @@ skills: [
       title: 'Knowledge Agent',
       category: 'AI Support',
       preview: 'RAG',
-      desc: 'A RAG application for answering questions from uploaded documents with citations.',
+      desc: 'A RAG app for answering questions from uploaded documents with citations.',
       problem: 'AI answers are hard to trust when they are not grounded in source material.',
-      built: 'Built a RAG workflow with document upload, chunking, embeddings, ChromaDB search, GPT streaming, inline citations, and source navigation.',
-      architecture: 'FastAPI backend, ChromaDB vector store, embedding pipeline, Server-Sent Events streaming, and React/Vite frontend.',
-      challenges: 'Grounding answers in retrieved context, streaming responses cleanly, and keeping citations tied to source chunks.',
-      tradeoffs: 'Local vector storage keeps the project lightweight; production would need auth, document lifecycle management, and scaling work.',
+      built: 'Built document upload, chunking, embeddings, ChromaDB search, GPT streaming, inline citations, and source navigation.',
+      architecture: 'FastAPI backend, ChromaDB vector store, embedding pipeline, SSE streaming, and React/Vite frontend.',
+      challenges: 'Grounded answers in retrieved context, streamed responses cleanly, and kept citations tied to source chunks.',
+      tradeoffs: 'Local vector storage keeps the project lightweight; production would need auth, document lifecycle, and scaling work.',
       results: 'Live demo with upload, vector search, streaming answers, clickable citations, and source navigation.',
       tech: ['Python', 'FastAPI', 'ChromaDB', 'Sentence Transformers', 'OpenAI GPT-4o-mini', 'Server-Sent Events', 'React', 'Vite', 'TypeScript'],
       features: ['Document upload', 'Vector search', 'Streaming answers', 'Clickable citations', 'Source navigation'],
-      role: 'Independent project. Built the backend, vector database, streaming flow, UI, and citation engine.',
+      role: 'Independent project. Built the backend, vector database, streaming flow, UI, and citation system.',
       status: 'Live demo.',
+      detail: 'AI support signal: retrieval, embeddings, streaming responses, citations, and full-stack implementation.',
       cta: 'Try Live Demo',
       url: 'https://e9c872e9-4229-481d-a3a8-8201e5e18b90-00-1pf3f373assue.spock.replit.dev',
       screenshots: [
@@ -1999,16 +2415,17 @@ skills: [
       category: 'ML Support',
       preview: 'NBA',
       desc: 'A Python model that predicts NBA winners with 67.8% reported accuracy.',
-      problem: 'Sports prediction data is noisy, and model features must avoid using information from the future.',
+      problem: 'Sports data is noisy, and prediction features must avoid future information.',
       built: 'Built a time-aware ML pipeline using 2019-2024 data, Elo ratings, rolling stats, efficiency metrics, rest, and chronological validation.',
-      architecture: 'Python data pipeline with feature engineering, training, evaluation, saved model artifacts, and prediction scripts.',
-      challenges: 'Preventing data leakage, building features from information available before each game, and validating on chronological splits.',
-      tradeoffs: 'Random Forest keeps the model explainable enough for a portfolio project; more tuning could improve performance but add complexity.',
+      architecture: 'Python pipeline for feature engineering, training, evaluation, saved model artifacts, and prediction scripts.',
+      challenges: 'Prevented data leakage, built pre-game features, and validated on chronological splits.',
+      tradeoffs: 'Random Forest keeps the model explainable; deeper tuning could improve performance but add complexity.',
       results: 'Public README reports 67.8% game-winner accuracy on 2019-2024 NBA data.',
       tech: ['Python', 'pandas', 'scikit-learn', 'Random Forest', 'Elo Ratings', 'Feature Engineering', 'joblib'],
       features: ['~10,000 games', 'Chronological split', 'Team Elo', 'Rolling features', 'Vegas probability comparison'],
       role: 'Independent project. Built the data processing, features, training, evaluation, and prediction scripts.',
       status: 'Public GitHub repo.',
+      detail: 'ML support signal: time-aware validation, feature engineering, model evaluation, and leakage prevention.',
       cta: 'View GitHub',
       url: 'https://github.com/BryllieBrinkley/NBA-Game-Prediction-Model'
     }
@@ -2018,8 +2435,8 @@ skills: [
     Dayline: 1,
     'NASA Explorer': 2,
     NearMe: 3,
-    PicDetect: 4,
-    GroupRide: 5,
+    GroupRide: 4,
+    'Imagery Red Carpet Salon': 5,
     'Knowledge Agent': 6,
     'NBA Game Prediction Model': 7
   };
